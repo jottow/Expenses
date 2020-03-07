@@ -1,0 +1,18 @@
+<div class="ausgaben-main-container">
+  <!-- <h5 class="display 4.text-center"> -->
+    <span style="font-weight:bold">Erfassung und Übersicht</span> 
+  <!-- </h5> -->
+  <hr>
+  <div class="row">
+    <div class="col-md-4">
+       <!-- ausgabenListComponent wird von ausgabenListComponent empfangen.
+      Hierdurch kann in ausgaben-imput.component die Methode refreshList() aufgerufen werden.
+     ausgabeEdit enthält die Daten des markierten Datensatzes, die von ausgabenListComponent emittiert wurden. -->
+      <app-ausgaben-input [ausgabenListComponent]="ausgabenListComponent" [ausgabeEdit]="ausgabeEdit">lädt...</app-ausgaben-input>
+   </div>
+    <div class="col-md-8">
+      <!-- ausgabenListComponent wird mit  #ausgabenListComponent veröffentlicht -->
+      <app-ausgabenlist #ausgabenListComponent (ausgabeEdit)="getAusgabenUpdate($event)" (selYear)="getYearUpdate($event)" (selMonth)="getMonthUpdate($event)" >lädt...</app-ausgabenlist> 
+    </div>
+  </div>
+</div>

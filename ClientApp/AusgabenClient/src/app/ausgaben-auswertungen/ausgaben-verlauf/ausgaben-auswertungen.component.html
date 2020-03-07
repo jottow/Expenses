@@ -1,0 +1,53 @@
+<div class="ausgaben-main-container">
+
+  <div class="row">
+    <!-- <div class="col-md-3">
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Jahr</mat-label>
+          <mat-select [(ngModel)]="selectedYear" [(value)]="selectedYear" (selectionChange)="refreshResults()" matTooltip="Jahr auswählen">
+            <mat-option *ngFor="let year of yearList" [value]="year">
+              {{year}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Monat</mat-label>
+          <mat-select [(ngModel)]="selectedMonth" [(value)]="selectedMonth" (selectionChange)="refreshResults()" matTooltip="Monat auswählen">
+            <mat-option *ngFor="let month of monthList" [value]="month.Value">
+              {{month.Text}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div> -->
+    <div class="col-md-12">
+      <app-month-picker  [selYear]="selYear" [selMonth]="selMonth" (selYearChanged)="getYearUpdate($event)" (selMonthChanged)="getMonthUpdate($event)" ></app-month-picker>
+    </div>
+  </div>
+  <hr>
+  <mat-card *ngIf="!resourcesLoaded" 
+   style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner 
+    color="primary" 
+    mode="indeterminate">
+  </mat-progress-spinner>
+  </mat-card>
+  <!-- wichtig:
+    - div um canvas
+    - kein *ngIf zum Rendern des Charts: Chart muss ausgeführt werden, ansonsten wird Chart gebrochen, falls kein 
+    existBetraege. Daher ngClass
+  -->
+  <div [ngClass]="existBetraege?'showBarChart':'hidden'" >
+    <canvas #barChart style="width:100%; height:100%;">{{barChart}}</canvas>
+  </div>
+  <div *ngIf="!existBetraege">
+    <span >keine Ausgaben im {{monthName}} {{selYear}} erfasst</span>
+  </div>
+
+  
+

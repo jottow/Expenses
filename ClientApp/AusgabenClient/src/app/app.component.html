@@ -1,0 +1,26 @@
+<h3 style="margin-top: 10px!important;">
+  Ausgabenverwaltung
+</h3>
+<mat-tab-group>
+  <mat-tab label="Erfassung">
+    <ng-template matTabContent>
+      <app-ausgaben [selYear]="selectedYear" [selMonth]="selectedMonth"  (selYearChanged)="getYearUpdate($event)" 
+      (selMonthChanged)="getMonthUpdate($event)" >
+      </app-ausgaben>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Auswertungen">
+    <ng-template matTabContent>
+      <mat-tab-group>            
+        <mat-tab *ngFor="let tab of prefTabs" label="{{tab.label}}">
+          <div *ngIf="tab.label === 'Ausgabenverläufe'">
+            <app-ausgaben-auswertungen [selYear]="selectedYear" [selMonth]="selectedMonth" (selYearChanged)="getYearUpdate($event)" (selMonthChanged)="getMonthUpdate($event)">lädt...</app-ausgaben-auswertungen>
+          </div>
+          <div *ngIf="tab.label === 'Weitere Statistiken'">
+            <app-ausgaben-kreisdiagramme [selYear]="selectedYear" [selMonth]="selectedMonth" (selYearChanged)="getYearUpdate($event)" (selMonthChanged)="getMonthUpdate($event)">lädt...</app-ausgaben-kreisdiagramme>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

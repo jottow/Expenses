@@ -1,0 +1,94 @@
+<div>
+  <mat-card *ngIf="!resourcesLoaded" style="display: flex; justify-content: center; align-items: center">
+ <mat-progress-spinner 
+   color="primary" 
+   mode="indeterminate">
+ </mat-progress-spinner>
+ </mat-card>
+  <mat-card style="min-width:800px">  
+    <mat-card-title>Ausgabenübersicht</mat-card-title>
+    <mat-card-content> 
+      <div class="row"  *ngIf="resourcesLoaded" >
+        <!-- <div class="col-md-3">
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Jahr</mat-label>
+              <mat-select [(ngModel)]="selectedYear" [(value)]="selectedYear" (selectionChange)="refreshResults()" matTooltip="Jahr auswählen">
+                <mat-option *ngFor="let year of yearList" [value]="year">
+                  {{year}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Monat</mat-label>
+              <mat-select [(ngModel)]="selectedMonth" [(value)]="selectedMonth" (selectionChange)="refreshResults()" matTooltip="Monat auswählen">
+                <mat-option *ngFor="let month of monthList" [value]="month.Value">
+                  {{month.Text}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div> -->
+        <div class="col-md-4">
+          <app-month-picker  [selYear]="selYear" [selMonth]="selMonth" (selYearChanged)="getYearUpdate($event)" (selMonthChanged)="getMonthUpdate($event)" ></app-month-picker>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">                  
+            <mat-form-field>
+              <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Filter">
+            </mat-form-field>
+          </div> 
+        </div>
+      </div>
+      <div class="mat-elevation-z8">
+        <mat-table *ngIf="resourcesLoaded" [dataSource]="dataSource"  matSort >
+          <ng-container matColumnDef="AusgabenTyp">
+            <mat-header-cell class="header-row" *matHeaderCellDef mat-sort-header> Ausgabentyp </mat-header-cell>
+            <mat-cell class="cell-row" *matCellDef="let ausgabe" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.AusgabenTyp}} </mat-cell>
+            <td mat-footer-cell *matFooterCellDef> Gesamtausgaben </td>
+          </ng-container>
+          <ng-container matColumnDef="Betrag">
+            <mat-header-cell class="header-row" *matHeaderCellDef mat-sort-header> Betrag </mat-header-cell>
+            <mat-cell class="cell-row"  *matCellDef="let ausgabe" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Betrag | currency:'EUR'}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency: 'EUR'}} </mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="Datum">
+            <mat-header-cell class="header-row" *matHeaderCellDef mat-sort-header>Datum</mat-header-cell>
+            <mat-cell class="cell-row" *matCellDef="let ausgabe"  (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Datum  | date:'dd.MM.yyyy'}} </mat-cell>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <ng-container matColumnDef="User">
+            <mat-header-cell class="header-row" *matHeaderCellDef mat-sort-header>Einkäufer </mat-header-cell>
+            <mat-cell  class="cell-row" *matCellDef="let ausgabe" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.User}} </mat-cell>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>     
+          <ng-container matColumnDef="Shop">
+            <mat-header-cell class="header-row" *matHeaderCellDef mat-sort-header>Geschäft </mat-header-cell>
+            <mat-cell  class="cell-row" *matCellDef="let ausgabe" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Shop}} </mat-cell>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>               
+          <ng-container matColumnDef="Bemerkung">
+            <mat-header-cell class="header-row" *matHeaderCellDef mat-sort-header style="width:30%"> Bemerkung </mat-header-cell>
+            <mat-cell  class="cell-row" *matCellDef="let ausgabe" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Bemerkung}} </mat-cell>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <ng-container matColumnDef="Delete">
+            <mat-header-cell class="header-row" *matHeaderCellDef  style="width:10px"> </mat-header-cell>
+            <mat-cell *matCellDef="let ausgabe" class="mat-delete">
+              <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(ausgabe.Id)"></i>
+            </mat-cell>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"  class="header-row"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          <mat-footer-row *matFooterRowDef="displayedColumns; sticky: true" class="ausgaben-list-footer"></mat-footer-row>
+        </mat-table>
+      </div>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

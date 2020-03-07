@@ -1,0 +1,83 @@
+<form name='#ausgabenInputForm' class="ausgaben-input-container" [formGroup]="ausgabenInputForm" (ngSubmit)="onFormSubmit(ausgabenInputForm.value)">
+  <mat-card>  
+      <mat-card-title>Ausgabe erfassen/ bearbeiten</mat-card-title>
+      <mat-card-content>  
+         <div class="row">
+          <div class="col-md-5">
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Ausgabentyp</mat-label>
+                <mat-select class="cell-row" [(ngModel)]="defaultAusgabenTyp" matTooltip="Ausgabentyp auswählen" formControlName="AusgabenTypId">
+                  <mat-option *ngFor="let ausgabentyp of ausgabenTypen  | async" [value]="ausgabentyp.AusgabenTypId">
+                    {{ausgabentyp.Name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field >
+                <input  class="cell-row"  formControlName="Betrag" type="number" step="0.01" matTooltip="Betrag in EUR" matInput placeholder="Betrag">  
+              </mat-form-field>  
+              <mat-error>  
+                <span *ngIf="!ausgabenInputForm.get('Betrag').value && ausgabenInputForm.get('Betrag').touched"></span>  
+              </mat-error>  
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Einkäufer</mat-label>
+                <mat-select class="cell-row" [(ngModel)]="defaultUser" matTooltip="Einkäufer auswählen" formControlName="UserId">
+                  <mat-option *ngFor="let user of users  | async" [value]="user.UserId">
+                    {{user.Name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+           </div>
+          </div>
+        
+          <div class="col-md-1"></div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <mat-form-field class="cell-row">  
+                    <input  class="cell-row" formControlName="Datum"  matTooltip="Datum" matInput  [matDatepicker]="picker" placeholder="Datum">  
+                    <mat-datepicker-toggle  class="cell-row" matSuffix [for]="picker"></mat-datepicker-toggle>  
+                      <mat-datepicker  class="cell-row" [startAt]="currentDate" #picker (selectedChanged)="onDateChanged($event)"></mat-datepicker> 
+                </mat-form-field>  
+                <mat-error>  
+                  <span *ngIf="!ausgabenInputForm.get('Datum').value && ausgabenInputForm.get('Datum').touched"></span>  
+                </mat-error>  
+            </div>   
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Geschäft</mat-label>
+                <mat-select class="cell-row" [(ngModel)]="defaultShop" matTooltip="Geschäft auswählen" formControlName="ShopId">
+                  <mat-option *ngFor="let shop of shops  | async" [value]="shop.ShopId">
+                    {{shop.Name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div> 
+            <div class="form-group">
+              <mat-form-field >  
+                  <input  class="cell-row" formControlName="Bemerkung"  matTooltip="Bemerkung" matInput placeholder="Bemerkung">  
+              </mat-form-field>  
+            </div>                                 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button type="submit" mat-raised-button color="accent"matTooltip="Speichern"[disabled]="!ausgabenInputForm.valid"> Speichern</button>      
+          </div>
+          <div class="col-md-6">          
+            <button type="button" mat-raised-button color="accent" matTooltip="Eingaben zurücksetzen" (click)="resetForm(ausgabenInputForm)"> Zurücksetzen</button>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:12px;" Class="success" align="left">  
+                {{message}}  
+            </p>  
+          </div>
+        </div>
+    </mat-card-content>
+  </mat-card>
+</form>

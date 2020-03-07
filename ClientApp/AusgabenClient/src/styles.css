@@ -1,0 +1,94 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.ausgaben-main-container {
+  margin-top: 20px;
+  max-width: 1224px;
+}
+
+.ausgaben-input-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ausgaben-input-container > * {
+    width: 100%;
+  }
+
+  .ausgaben-list-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ausgaben-list-footer {
+   font-weight: bold;
+  }
+
+  .mat-card-title{
+    font-size: 16px;
+  }
+
+  .mat-form-field-infix{
+    font-size:13px;
+    width:180px;
+  }
+  .mat-row:hover {
+    background-color: lightgrey;
+  }
+
+  .mat-delete{
+    cursor: pointer;
+  }
+
+  .mat-tab-header{
+    font-size: 12px;
+  }
+  .mat-tab-label {
+    min-width: 25px !important;
+    padding: 5px;
+    background-color: transparent;
+    font-weight: 700;
+}
+
+/* Styles for the active tab label */
+.mat-tab-label.mat-tab-label-active {
+    min-width: 25px !important;
+    padding: 5px;
+    background-color: transparent;
+    font-weight: bold;
+}
+
+/* Styles for the ink bar */
+.mat-ink-bar {
+    background-color: green;
+}
+
+p {
+  font-family: Lato;
+}
+
+.header-row{
+  font-weight: bold;
+}
+
+.cell-row{
+  font-size: 11px;
+}
+
+.hidden{
+  display: none;
+}
+
+.shown{
+  display:block;
+}
+
+.showBarChart{
+  display: block;
+  height:600px;width:1024px; overflow: scroll;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

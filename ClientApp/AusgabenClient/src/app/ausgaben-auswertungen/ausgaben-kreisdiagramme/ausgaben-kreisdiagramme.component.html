@@ -1,0 +1,32 @@
+<div class="ausgaben-main-container">
+
+    
+  <div class="row">
+     <div class="col-md-12">
+      <app-month-picker  [selYear]="selYear" [selMonth]="selMonth" (selYearChanged)="getYearUpdate($event)" (selMonthChanged)="getMonthUpdate($event)" ></app-month-picker>
+    </div>
+  </div>
+  <hr>
+  
+  <!-- wichtig:div um canvas -->
+  <mat-card *ngIf="!resourcesLoaded" 
+   style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner 
+    color="primary" 
+    mode="indeterminate">
+  </mat-progress-spinner>
+  </mat-card>
+  
+  <div *ngIf="!existBetraege && resourcesLoaded">
+    keine Ausgaben im {{monthName}} {{selectedYear}} erfasst
+  </div>
+  <div [ngClass]="existBetraege?'shown':'hidden'" >
+  <div  class="row">
+    <div   class="col-md-6">
+      <canvas #pieChartRatioUsers >{{pieChartRatioUsers}}</canvas>
+    </div>
+    <div  class="col-md-6">
+      <canvas #pieChartRatioAusgabenTyp >{{pieChartRatioAusgabenTyp}}</canvas>
+    </div>  
+  </div>
+</div>
