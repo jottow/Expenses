@@ -598,8 +598,8 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Ilona\source\repos\Ausgabenverwaltung\ClientApp\AusgabenClient\node_modules\@angular\material\prebuilt-themes\indigo-pink.css */"./node_modules/@angular/material/prebuilt-themes/indigo-pink.css");
-module.exports = __webpack_require__(/*! C:\Users\Ilona\source\repos\Ausgabenverwaltung\ClientApp\AusgabenClient\src\styles.css */"./src/styles.css");
+__webpack_require__(/*! C:\Users\Ilona\source\repos\Expenses\Expenses\ClientApp\ausgabenclient\node_modules\@angular\material\prebuilt-themes\indigo-pink.css */"./node_modules/@angular/material/prebuilt-themes/indigo-pink.css");
+module.exports = __webpack_require__(/*! C:\Users\Ilona\source\repos\Expenses\Expenses\ClientApp\ausgabenclient\src\styles.css */"./src/styles.css");
 
 
 /***/ })

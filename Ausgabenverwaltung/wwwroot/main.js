@@ -1140,8 +1140,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/ausgaben.service */ "./src/app/shared/ausgaben.service.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var src_app_shared_ausgaben_model__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/ausgaben.model */ "./src/app/shared/ausgaben.model.ts");
-/* harmony import */ var src_app_ausgaben_ausgaben_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/ausgaben/ausgaben.component */ "./src/app/ausgaben/ausgaben.component.ts");
-/* harmony import */ var _ausgaben_list_ausgaben_list_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../ausgaben-list/ausgaben-list.component */ "./src/app/ausgaben/ausgaben-list/ausgaben-list.component.ts");
+/* harmony import */ var src_app_app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/app.component */ "./src/app/app.component.ts");
+/* harmony import */ var src_app_ausgaben_ausgaben_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/ausgaben/ausgaben.component */ "./src/app/ausgaben/ausgaben.component.ts");
+/* harmony import */ var _ausgaben_list_ausgaben_list_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../ausgaben-list/ausgaben-list.component */ "./src/app/ausgaben/ausgaben-list/ausgaben-list.component.ts");
+
 
 
 
@@ -1150,9 +1152,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var AusgabenInputComponent = /** @class */ (function () {
-    function AusgabenInputComponent(formbuider, service, ausgabenComponent) {
+    function AusgabenInputComponent(formbuider, service, appComponent, ausgabenComponent) {
         this.formbuider = formbuider;
         this.service = service;
+        this.appComponent = appComponent;
         this.ausgabenComponent = ausgabenComponent;
         this.defaultUser = 1;
         this.defaultShop = 1;
@@ -1164,9 +1167,9 @@ var AusgabenInputComponent = /** @class */ (function () {
         this.currentDate = new Date();
         console.log('currentDate (ngOnInit):');
         console.log(this.currentDate);
-        this.ausgabenTypen = this.ausgabenComponent.loadAllAusgabenTypen();
-        this.users = this.ausgabenComponent.loadAllUsers();
-        this.shops = this.ausgabenComponent.loadAllShops();
+        this.ausgabenTypen = this.appComponent.allAusgabenTypen;
+        this.users = this.appComponent.allUsers;
+        this.shops = this.appComponent.allShops;
         this.ausgabenInputForm = this.formbuider.group({
             Id: ['0'],
             AusgabenTypId: [this.defaultAusgabenTyp, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
@@ -1223,9 +1226,6 @@ var AusgabenInputComponent = /** @class */ (function () {
         }
         this.service.addNewAusgabe(ausgaben).subscribe(function () {
             _this.message = 'Ausgabe erfolgreich erfasst.';
-            _this.ausgabenTypen = _this.ausgabenComponent.loadAllAusgabenTypen();
-            _this.users = _this.ausgabenComponent.loadAllUsers();
-            _this.shops = _this.ausgabenComponent.loadAllShops();
             _this.ausgabenListComponent.refreshResults();
             _this.dateChanged = false;
             console.log(_this.message);
@@ -1235,9 +1235,6 @@ var AusgabenInputComponent = /** @class */ (function () {
         var _this = this;
         this.service.updateAusgabe(ausgaben).subscribe(function () {
             _this.message = 'Ausgabe erfolgreich geändert.';
-            _this.ausgabenTypen = _this.ausgabenComponent.loadAllAusgabenTypen();
-            _this.users = _this.ausgabenComponent.loadAllUsers();
-            _this.shops = _this.ausgabenComponent.loadAllShops();
             _this.ausgabenListComponent.refreshResults();
             console.log(_this.message);
         });
@@ -1252,7 +1249,7 @@ var AusgabenInputComponent = /** @class */ (function () {
     ], AusgabenInputComponent.prototype, "ausgabeEdit", void 0);
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _ausgaben_list_ausgaben_list_component__WEBPACK_IMPORTED_MODULE_6__["AusgabenListComponent"])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _ausgaben_list_ausgaben_list_component__WEBPACK_IMPORTED_MODULE_7__["AusgabenListComponent"])
     ], AusgabenInputComponent.prototype, "ausgabenListComponent", void 0);
     AusgabenInputComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1261,7 +1258,8 @@ var AusgabenInputComponent = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"],
             src_app_shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_2__["AusgabenService"],
-            src_app_ausgaben_ausgaben_component__WEBPACK_IMPORTED_MODULE_5__["AusgabenComponent"]])
+            src_app_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
+            src_app_ausgaben_ausgaben_component__WEBPACK_IMPORTED_MODULE_6__["AusgabenComponent"]])
     ], AusgabenInputComponent);
     return AusgabenInputComponent;
 }());
@@ -1931,7 +1929,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Ilona\source\repos\Ausgabenverwaltung\ClientApp\AusgabenClient\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\Ilona\source\repos\Expenses\Expenses\ClientApp\ausgabenclient\src\main.ts */"./src/main.ts");
 
 
 /***/ })

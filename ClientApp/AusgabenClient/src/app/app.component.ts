@@ -5,6 +5,7 @@ import { AusgabenService } from './shared/ausgaben.service';
 import { Observable } from 'rxjs';
 import { Ausgaben } from './shared/ausgaben.model';
 import { Ausgabentyp } from './shared/ausgabentyp.model';
+import { ShopSet } from './shared/interfaces/shop-set';
 
 enum ChartColorsAusgabenTypen {
   "grey",
@@ -35,14 +36,17 @@ export class AppComponent implements OnInit, OnChanges {
   selectedMonth:number;
   allAusgaben: Observable<Ausgaben[]>;
 
-  allUsers: UserSet[];
-  userNames: string[];
-  userColors: string[];
-
   allAusgabenTypen: AusgabenTypSet[];
   ausgabenTypenNames: string[];
   ausgabenTypColors: string[];
   
+  allUsers: UserSet[];
+  userNames: string[];
+  userColors: string[];
+
+  allShops: ShopSet[];
+
+ 
   prefTabs = [
     {label: 'Ausgabenverläufe', content: 'Ausgabenverläufe'},
     {label: 'Weitere Statistiken', content: 'Weitere Stats'}

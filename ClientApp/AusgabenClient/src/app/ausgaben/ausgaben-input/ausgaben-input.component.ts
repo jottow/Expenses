@@ -4,10 +4,14 @@ import { Ausgabentyp } from 'src/app/shared/ausgabentyp.model';
 import { AusgabenService } from 'src/app/shared/ausgaben.service';
 import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Ausgaben } from 'src/app/shared/ausgaben.model';
+import { AppComponent } from 'src/app/app.component';
 import {AusgabenComponent} from 'src/app/ausgaben/ausgaben.component';
 import { AusgabenListComponent } from '../ausgaben-list/ausgaben-list.component';
 import { User } from 'src/app/shared/user.model';
 import { Shop } from 'src/app/shared/shop.model';
+import { AusgabenTypSet } from 'src/app/shared/interfaces/ausgabentyp-set';
+import { UserSet } from 'src/app/shared/interfaces/user-set';
+import { ShopSet } from 'src/app/shared/interfaces/shop-set';
 
 
 @Component({
@@ -24,15 +28,16 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
 
   constructor(private formbuider: FormBuilder,
     private service: AusgabenService, 
+    private appComponent: AppComponent,
     private ausgabenComponent: AusgabenComponent) {
     this.defaultAusgabenTyp = 1;
 
    }
 
   ausgabenInputForm: any;
-  ausgabenTypen: Observable<Ausgabentyp[]>;
-  users: Observable<User[]>;
-  shops: Observable<Shop[]>;
+  ausgabenTypen: AusgabenTypSet[];
+  users: UserSet[];
+  shops: ShopSet[];
   defaultAusgabenTyp:any;
   defaultUser=1;
   defaultShop=1;
@@ -46,9 +51,9 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
     this.currentDate=new Date(); 
     console.log('currentDate (ngOnInit):');
     console.log(this.currentDate);
-    this.ausgabenTypen=this.ausgabenComponent.loadAllAusgabenTypen();
-    this.users=this.ausgabenComponent.loadAllUsers();
-    this.shops=this.ausgabenComponent.loadAllShops();
+    this.ausgabenTypen=this.appComponent.allAusgabenTypen;
+    this.users=this.appComponent.allUsers;
+    this.shops=this.appComponent.allShops;
     this.ausgabenInputForm=this.formbuider.group({
       Id: ['0'],
       AusgabenTypId:[this.defaultAusgabenTyp, [Validators.required]],
@@ -112,9 +117,6 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
     this.service.addNewAusgabe(ausgaben).subscribe(  
         () => {  
           this.message = 'Ausgabe erfolgreich erfasst.';  
-          this.ausgabenTypen=this.ausgabenComponent.loadAllAusgabenTypen(); 
-          this.users=this.ausgabenComponent.loadAllUsers(); 
-          this.shops=this.ausgabenComponent.loadAllShops();
           this.ausgabenListComponent.refreshResults();
           this.dateChanged=false;
           console.log(this.message);
@@ -126,9 +128,6 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
     this.service.updateAusgabe(ausgaben).subscribe(  
       () => {  
         this.message = 'Ausgabe erfolgreich geändert.';  
-        this.ausgabenTypen=this.ausgabenComponent.loadAllAusgabenTypen();
-        this.users=this.ausgabenComponent.loadAllUsers();
-        this.shops=this.ausgabenComponent.loadAllShops();
         this.ausgabenListComponent.refreshResults();
         console.log(this.message);
       } 
