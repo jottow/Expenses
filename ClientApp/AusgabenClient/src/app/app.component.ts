@@ -1,11 +1,12 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { ChartColorsUser } from './shared/chart-colors-user.enum';
+import { ChartColorsUser } from './shared/enums/chart-colors-user.enum';
 import { UserSet } from './shared/interfaces/user-set';
 import { AusgabenService } from './shared/ausgaben.service';
 import { Observable } from 'rxjs';
 import { Ausgaben } from './shared/ausgaben.model';
 import { Ausgabentyp } from './shared/ausgabentyp.model';
 import { ShopSet } from './shared/interfaces/shop-set';
+import { ChartColorsShops } from './shared/enums/chart-colors.shop.enum';
 
 enum ChartColorsAusgabenTypen {
   "grey",
@@ -45,6 +46,8 @@ export class AppComponent implements OnInit, OnChanges {
   userColors: string[];
 
   allShops: ShopSet[];
+  shopNames: string[];
+  shopColors: string[];
 
  
   prefTabs = [
@@ -62,9 +65,12 @@ export class AppComponent implements OnInit, OnChanges {
     this.selectedMonth = new Date().getMonth() + 1; // getMonth() is 0-based
     this.allUsers=[];
     this.allAusgabenTypen=[];
+    this.allShops=[];
     this.getUsers();
     this.getAusgaben();
     this.getAusgabenTypen();
+    this.getShops();
+    
     
     
   }
@@ -74,27 +80,7 @@ export class AppComponent implements OnInit, OnChanges {
     this.getAusgaben();
   }
 
-  getUsers(){
-    this.service.getAllUsers().subscribe(
-      data => {
-          let colorIndex = 0;
-          data.forEach(b=>{
-            this.allUsers.push({UserId:b.UserId, Name:b.Name, Color:ChartColorsUser[colorIndex]});
-            colorIndex++;
-          });
-
-          this.userNames =this.allUsers.map(u=>u.Name)
-          console.log('Users:');
-          console.log(this.allUsers);
-
-          this.userColors=this.allUsers.map(u => u.Color);
-          console.log('UserColors:');
-          console.log(this.userColors);
-          console.log('UserNames:');
-          console.log(this.userNames);
-        }  
-      );
-  }
+ 
 
   getAusgaben(){
     this.allAusgaben= this.service.getAllAusgaben(this.selectedYear, this.selectedMonth);
@@ -118,7 +104,51 @@ export class AppComponent implements OnInit, OnChanges {
       }  
     );
   }
- 
+
+ getUsers(){
+    this.service.getAllUsers().subscribe(
+      data => {
+          let colorIndex = 0;
+          data.forEach(b=>{
+            this.allUsers.push({UserId:b.UserId, Name:b.Name, Color:ChartColorsUser[colorIndex]});
+            colorIndex++;
+          });
+
+          this.userNames =this.allUsers.map(u=>u.Name)
+          console.log('Users:');
+          console.log(this.allUsers);
+
+          this.userColors=this.allUsers.map(u => u.Color);
+          console.log('UserColors:');
+          console.log(this.userColors);
+          console.log('UserNames:');
+          console.log(this.userNames);
+        }  
+      );
+  }
+
+  getShops(){
+    this.service.getAllShops().subscribe(
+      data => {
+          let colorIndex = 0;
+          data.forEach(s=>{
+            this.allShops.push({ShopId:s.ShopId, Name:s.Name, Color:ChartColorsShops[colorIndex]});
+            colorIndex++;
+          });
+
+          this.shopNames =this.allShops.map(s=>s.Name)
+          console.log('Shops:');
+          console.log(this.allShops);
+
+          this.shopColors=this.allShops.map(u => u.Color);
+          console.log('ShopColors:');
+          console.log(this.shopColors);
+          console.log('ShopNames:');
+          console.log(this.shopNames);
+        }  
+      );
+
+  }
 
   // fügt "0"-en vor übergebene Zahl, bis "size" erreicht ist:
   //Bsp: number=9, size=2: ==> "09"

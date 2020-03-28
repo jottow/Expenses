@@ -333,8 +333,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _shared_chart_colors_user_enum__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shared/chart-colors-user.enum */ "./src/app/shared/chart-colors-user.enum.ts");
+/* harmony import */ var _shared_enums_chart_colors_user_enum__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shared/enums/chart-colors-user.enum */ "./src/app/shared/enums/chart-colors-user.enum.ts");
 /* harmony import */ var _shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/ausgaben.service */ "./src/app/shared/ausgaben.service.ts");
+/* harmony import */ var _shared_enums_chart_colors_shop_enum__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shared/enums/chart-colors.shop.enum */ "./src/app/shared/enums/chart-colors.shop.enum.ts");
+
 
 
 
@@ -363,31 +365,15 @@ var AppComponent = /** @class */ (function () {
         this.selectedMonth = new Date().getMonth() + 1; // getMonth() is 0-based
         this.allUsers = [];
         this.allAusgabenTypen = [];
+        this.allShops = [];
         this.getUsers();
         this.getAusgaben();
         this.getAusgabenTypen();
+        this.getShops();
     };
     AppComponent.prototype.ngOnChanges = function () {
         console.log('app.component OnChanges');
         this.getAusgaben();
-    };
-    AppComponent.prototype.getUsers = function () {
-        var _this = this;
-        this.service.getAllUsers().subscribe(function (data) {
-            var colorIndex = 0;
-            data.forEach(function (b) {
-                _this.allUsers.push({ UserId: b.UserId, Name: b.Name, Color: _shared_chart_colors_user_enum__WEBPACK_IMPORTED_MODULE_2__["ChartColorsUser"][colorIndex] });
-                colorIndex++;
-            });
-            _this.userNames = _this.allUsers.map(function (u) { return u.Name; });
-            console.log('Users:');
-            console.log(_this.allUsers);
-            _this.userColors = _this.allUsers.map(function (u) { return u.Color; });
-            console.log('UserColors:');
-            console.log(_this.userColors);
-            console.log('UserNames:');
-            console.log(_this.userNames);
-        });
     };
     AppComponent.prototype.getAusgaben = function () {
         this.allAusgaben = this.service.getAllAusgaben(this.selectedYear, this.selectedMonth);
@@ -406,6 +392,42 @@ var AppComponent = /** @class */ (function () {
             console.log(_this.ausgabenTypColors);
             console.log('AusgabentypNames:');
             console.log(_this.ausgabenTypenNames);
+        });
+    };
+    AppComponent.prototype.getUsers = function () {
+        var _this = this;
+        this.service.getAllUsers().subscribe(function (data) {
+            var colorIndex = 0;
+            data.forEach(function (b) {
+                _this.allUsers.push({ UserId: b.UserId, Name: b.Name, Color: _shared_enums_chart_colors_user_enum__WEBPACK_IMPORTED_MODULE_2__["ChartColorsUser"][colorIndex] });
+                colorIndex++;
+            });
+            _this.userNames = _this.allUsers.map(function (u) { return u.Name; });
+            console.log('Users:');
+            console.log(_this.allUsers);
+            _this.userColors = _this.allUsers.map(function (u) { return u.Color; });
+            console.log('UserColors:');
+            console.log(_this.userColors);
+            console.log('UserNames:');
+            console.log(_this.userNames);
+        });
+    };
+    AppComponent.prototype.getShops = function () {
+        var _this = this;
+        this.service.getAllShops().subscribe(function (data) {
+            var colorIndex = 0;
+            data.forEach(function (s) {
+                _this.allShops.push({ ShopId: s.ShopId, Name: s.Name, Color: _shared_enums_chart_colors_shop_enum__WEBPACK_IMPORTED_MODULE_4__["ChartColorsShops"][colorIndex] });
+                colorIndex++;
+            });
+            _this.shopNames = _this.allShops.map(function (s) { return s.Name; });
+            console.log('Shops:');
+            console.log(_this.allShops);
+            _this.shopColors = _this.allShops.map(function (u) { return u.Color; });
+            console.log('ShopColors:');
+            console.log(_this.shopColors);
+            console.log('ShopNames:');
+            console.log(_this.shopNames);
         });
     };
     // fügt "0"-en vor übergebene Zahl, bis "size" erreicht ist:
@@ -920,7 +942,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var src_app_app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/app.component */ "./src/app/app.component.ts");
-/* harmony import */ var src_app_shared_chart_colors_user_enum__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/chart-colors-user.enum */ "./src/app/shared/chart-colors-user.enum.ts");
+/* harmony import */ var src_app_shared_enums_chart_colors_user_enum__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/enums/chart-colors-user.enum */ "./src/app/shared/enums/chart-colors-user.enum.ts");
 /* harmony import */ var src_app_ausgaben_ausgaben_list_ausgaben_list_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/ausgaben/ausgaben-list/ausgaben-list.component */ "./src/app/ausgaben/ausgaben-list/ausgaben-list.component.ts");
 
 
@@ -994,7 +1016,7 @@ var AusgabenAuswertungenComponent = /** @class */ (function () {
             var colorIndex = 0;
             _this.baseComponent.allUsers.forEach(function (u) {
                 // console.log(this.chartDataSets);
-                _this.chartDataSets.push({ label: u.Name, data: [], fill: false, backgroundColor: src_app_shared_chart_colors_user_enum__WEBPACK_IMPORTED_MODULE_5__["ChartColorsUser"][colorIndex] });
+                _this.chartDataSets.push({ label: u.Name, data: [], fill: false, backgroundColor: src_app_shared_enums_chart_colors_user_enum__WEBPACK_IMPORTED_MODULE_5__["ChartColorsUser"][colorIndex] });
                 colorIndex++;
                 var betraege = [];
                 _this.ausgabenArray.map(function (a) {
@@ -1121,7 +1143,7 @@ var AusgabenAuswertungenComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form name='#ausgabenInputForm' class=\"ausgaben-input-container\" [formGroup]=\"ausgabenInputForm\" (ngSubmit)=\"onFormSubmit(ausgabenInputForm.value)\">\r\n  <mat-card>  \r\n      <mat-card-title>Ausgabe erfassen/ bearbeiten</mat-card-title>\r\n      <mat-card-content>  \r\n         <div class=\"row\">\r\n          <div class=\"col-md-5\">\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Ausgabentyp</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultAusgabenTyp\" matTooltip=\"Ausgabentyp auswählen\" formControlName=\"AusgabenTypId\">\r\n                  <mat-option *ngFor=\"let ausgabentyp of ausgabenTypen  | async\" [value]=\"ausgabentyp.AusgabenTypId\">\r\n                    {{ausgabentyp.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field >\r\n                <input  class=\"cell-row\"  formControlName=\"Betrag\" type=\"number\" step=\"0.01\" matTooltip=\"Betrag in EUR\" matInput placeholder=\"Betrag\">  \r\n              </mat-form-field>  \r\n              <mat-error>  \r\n                <span *ngIf=\"!ausgabenInputForm.get('Betrag').value && ausgabenInputForm.get('Betrag').touched\"></span>  \r\n              </mat-error>  \r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Einkäufer</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultUser\" matTooltip=\"Einkäufer auswählen\" formControlName=\"UserId\">\r\n                  <mat-option *ngFor=\"let user of users  | async\" [value]=\"user.UserId\">\r\n                    {{user.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n           </div>\r\n          </div>\r\n        \r\n          <div class=\"col-md-1\"></div>\r\n          <div class=\"col-md-6\">\r\n            <div class=\"form-group\">\r\n                <mat-form-field class=\"cell-row\">  \r\n                    <input  class=\"cell-row\" formControlName=\"Datum\"  matTooltip=\"Datum\" matInput  [matDatepicker]=\"picker\" placeholder=\"Datum\">  \r\n                    <mat-datepicker-toggle  class=\"cell-row\" matSuffix [for]=\"picker\"></mat-datepicker-toggle>  \r\n                      <mat-datepicker  class=\"cell-row\" [startAt]=\"currentDate\" #picker (selectedChanged)=\"onDateChanged($event)\"></mat-datepicker> \r\n                </mat-form-field>  \r\n                <mat-error>  \r\n                  <span *ngIf=\"!ausgabenInputForm.get('Datum').value && ausgabenInputForm.get('Datum').touched\"></span>  \r\n                </mat-error>  \r\n            </div>   \r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Geschäft</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultShop\" matTooltip=\"Geschäft auswählen\" formControlName=\"ShopId\">\r\n                  <mat-option *ngFor=\"let shop of shops  | async\" [value]=\"shop.ShopId\">\r\n                    {{shop.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div> \r\n            <div class=\"form-group\">\r\n              <mat-form-field >  \r\n                  <input  class=\"cell-row\" formControlName=\"Bemerkung\"  matTooltip=\"Bemerkung\" matInput placeholder=\"Bemerkung\">  \r\n              </mat-form-field>  \r\n            </div>                                 \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-6\">\r\n            <button type=\"submit\" mat-raised-button color=\"accent\"matTooltip=\"Speichern\"[disabled]=\"!ausgabenInputForm.valid\"> Speichern</button>      \r\n          </div>\r\n          <div class=\"col-md-6\">          \r\n            <button type=\"button\" mat-raised-button color=\"accent\" matTooltip=\"Eingaben zurücksetzen\" (click)=\"resetForm(ausgabenInputForm)\"> Zurücksetzen</button>  \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-12\">\r\n            <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:12px;\" Class=\"success\" align=\"left\">  \r\n                {{message}}  \r\n            </p>  \r\n          </div>\r\n        </div>\r\n    </mat-card-content>\r\n  </mat-card>\r\n</form>"
+module.exports = "<form name='#ausgabenInputForm' class=\"ausgaben-input-container\" [formGroup]=\"ausgabenInputForm\" (ngSubmit)=\"onFormSubmit(ausgabenInputForm.value)\">\r\n  <mat-card>  \r\n      <mat-card-title>Ausgabe erfassen/ bearbeiten</mat-card-title>\r\n      <mat-card-content>  \r\n         <div class=\"row\">\r\n          <div class=\"col-md-5\">\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Ausgabentyp</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultAusgabenTyp\" matTooltip=\"Ausgabentyp auswählen\" formControlName=\"AusgabenTypId\">\r\n                  <mat-option *ngFor=\"let ausgabentyp of ausgabenTypen\" [value]=\"ausgabentyp.AusgabenTypId\">\r\n                    {{ausgabentyp.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field >\r\n                <input  class=\"cell-row\"  formControlName=\"Betrag\" type=\"number\" step=\"0.01\" matTooltip=\"Betrag in EUR\" matInput placeholder=\"Betrag\">  \r\n              </mat-form-field>  \r\n              <mat-error>  \r\n                <span *ngIf=\"!ausgabenInputForm.get('Betrag').value && ausgabenInputForm.get('Betrag').touched\"></span>  \r\n              </mat-error>  \r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Einkäufer</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultUser\" matTooltip=\"Einkäufer auswählen\" formControlName=\"UserId\">\r\n                  <mat-option *ngFor=\"let user of users\" [value]=\"user.UserId\">\r\n                    {{user.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n           </div>\r\n          </div>\r\n        \r\n          <div class=\"col-md-1\"></div>\r\n          <div class=\"col-md-6\">\r\n            <div class=\"form-group\">\r\n                <mat-form-field class=\"cell-row\">  \r\n                    <input  class=\"cell-row\" formControlName=\"Datum\"  matTooltip=\"Datum\" matInput  [matDatepicker]=\"picker\" placeholder=\"Datum\">  \r\n                    <mat-datepicker-toggle  class=\"cell-row\" matSuffix [for]=\"picker\"></mat-datepicker-toggle>  \r\n                      <mat-datepicker  class=\"cell-row\" [startAt]=\"currentDate\" #picker (selectedChanged)=\"onDateChanged($event)\"></mat-datepicker> \r\n                </mat-form-field>  \r\n                <mat-error>  \r\n                  <span *ngIf=\"!ausgabenInputForm.get('Datum').value && ausgabenInputForm.get('Datum').touched\"></span>  \r\n                </mat-error>  \r\n            </div>   \r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Geschäft</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultShop\" matTooltip=\"Geschäft auswählen\" formControlName=\"ShopId\">\r\n                  <mat-option *ngFor=\"let shop of shops\" [value]=\"shop.ShopId\"> \r\n                    <!-- //   | async -->\r\n                    {{shop.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div> \r\n            <div class=\"form-group\">\r\n              <mat-form-field >  \r\n                  <input  class=\"cell-row\" formControlName=\"Bemerkung\"  matTooltip=\"Bemerkung\" matInput placeholder=\"Bemerkung\">  \r\n              </mat-form-field>  \r\n            </div>                                 \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-6\">\r\n            <button type=\"submit\" mat-raised-button color=\"accent\"matTooltip=\"Speichern\"[disabled]=\"!ausgabenInputForm.valid\"> Speichern</button>      \r\n          </div>\r\n          <div class=\"col-md-6\">          \r\n            <button type=\"button\" mat-raised-button color=\"accent\" matTooltip=\"Eingaben zurücksetzen\" (click)=\"resetForm(ausgabenInputForm)\"> Zurücksetzen</button>  \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-12\">\r\n            <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:12px;\" Class=\"success\" align=\"left\">  \r\n                {{message}}  \r\n            </p>  \r\n          </div>\r\n        </div>\r\n    </mat-card-content>\r\n  </mat-card>\r\n</form>"
 
 /***/ }),
 
@@ -1157,9 +1179,10 @@ var AusgabenInputComponent = /** @class */ (function () {
         this.service = service;
         this.appComponent = appComponent;
         this.ausgabenComponent = ausgabenComponent;
+        // Standard values for base data in dropdowns
+        this.defaultAusgabenTyp = 1;
         this.defaultUser = 1;
         this.defaultShop = 1;
-        this.defaultAusgabenTyp = 1;
     }
     AusgabenInputComponent.prototype.ngOnInit = function () {
         // Initialisieren der Eingabefelder
@@ -1208,6 +1231,7 @@ var AusgabenInputComponent = /** @class */ (function () {
         this.resetForm(this.ausgabenInputForm);
     };
     AusgabenInputComponent.prototype.resetForm = function (form) {
+        console.log('resetForm');
         this.defaultAusgabenTyp = 1;
         if (form != null) {
             this.currentDate = new Date(); //TODO: warum hat sich der Wert auf Date()-1 geändert?
@@ -1496,16 +1520,6 @@ var AusgabenComponent = /** @class */ (function () {
         console.log('gewählter Monat:' + selected);
         this.selMonthChanged.emit(selected);
     };
-    // Dropdowns
-    AusgabenComponent.prototype.loadAllAusgabenTypen = function () {
-        return this.service.getAllAusgabenTypen();
-    };
-    AusgabenComponent.prototype.loadAllUsers = function () {
-        return this.service.getAllUsers();
-    };
-    AusgabenComponent.prototype.loadAllShops = function () {
-        return this.service.getAllShops();
-    };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
@@ -1699,10 +1713,10 @@ var AusgabenService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/shared/chart-colors-user.enum.ts":
-/*!**************************************************!*\
-  !*** ./src/app/shared/chart-colors-user.enum.ts ***!
-  \**************************************************/
+/***/ "./src/app/shared/enums/chart-colors-user.enum.ts":
+/*!********************************************************!*\
+  !*** ./src/app/shared/enums/chart-colors-user.enum.ts ***!
+  \********************************************************/
 /*! exports provided: ChartColorsUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1716,6 +1730,30 @@ var ChartColorsUser;
     ChartColorsUser[ChartColorsUser["blue"] = 2] = "blue";
     ChartColorsUser[ChartColorsUser["yellow"] = 3] = "yellow";
 })(ChartColorsUser || (ChartColorsUser = {}));
+
+
+/***/ }),
+
+/***/ "./src/app/shared/enums/chart-colors.shop.enum.ts":
+/*!********************************************************!*\
+  !*** ./src/app/shared/enums/chart-colors.shop.enum.ts ***!
+  \********************************************************/
+/*! exports provided: ChartColorsShops */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChartColorsShops", function() { return ChartColorsShops; });
+var ChartColorsShops;
+(function (ChartColorsShops) {
+    ChartColorsShops[ChartColorsShops["red"] = 0] = "red";
+    ChartColorsShops[ChartColorsShops["yellow"] = 1] = "yellow";
+    ChartColorsShops[ChartColorsShops["green"] = 2] = "green";
+    ChartColorsShops[ChartColorsShops["blue"] = 3] = "blue";
+    ChartColorsShops[ChartColorsShops["brown"] = 4] = "brown";
+    ChartColorsShops[ChartColorsShops["orange"] = 5] = "orange";
+    ChartColorsShops[ChartColorsShops["pink"] = 6] = "pink";
+})(ChartColorsShops || (ChartColorsShops = {}));
 
 
 /***/ }),
@@ -1929,7 +1967,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Ilona\source\repos\Expenses\Expenses\ClientApp\ausgabenclient\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\Ilona\source\repos\Expenses\Expenses\ClientApp\AusgabenClient\src\main.ts */"./src/main.ts");
 
 
 /***/ })

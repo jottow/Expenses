@@ -3,7 +3,8 @@ import { AusgabenService } from 'src/app/shared/ausgaben.service';
 import {Chart} from 'chart.js';
 import * as _ from 'lodash';
 import {AppComponent} from  'src/app/app.component';
-import {ChartColorsUser} from 'src/app/shared/chart-colors-user.enum';
+import {ChartColorsUser} from 'src/app/shared/enums/chart-colors-user.enum';
+import {ChartColorsShops} from 'src/app/shared/enums/chart-colors.shop.enum';
 import { AusgabenListComponent } from 'src/app/ausgaben/ausgaben-list/ausgaben-list.component';
 import { BetragsSet } from 'src/app/shared/interfaces/betrags-set';
 

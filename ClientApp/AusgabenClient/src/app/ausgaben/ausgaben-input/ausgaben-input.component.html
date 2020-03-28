@@ -8,7 +8,7 @@
               <mat-form-field>
                 <mat-label>Ausgabentyp</mat-label>
                 <mat-select class="cell-row" [(ngModel)]="defaultAusgabenTyp" matTooltip="Ausgabentyp auswählen" formControlName="AusgabenTypId">
-                  <mat-option *ngFor="let ausgabentyp of ausgabenTypen  | async" [value]="ausgabentyp.AusgabenTypId">
+                  <mat-option *ngFor="let ausgabentyp of ausgabenTypen" [value]="ausgabentyp.AusgabenTypId">
                     {{ausgabentyp.Name}}
                   </mat-option>
                 </mat-select>
@@ -26,7 +26,7 @@
               <mat-form-field>
                 <mat-label>Einkäufer</mat-label>
                 <mat-select class="cell-row" [(ngModel)]="defaultUser" matTooltip="Einkäufer auswählen" formControlName="UserId">
-                  <mat-option *ngFor="let user of users  | async" [value]="user.UserId">
+                  <mat-option *ngFor="let user of users" [value]="user.UserId">
                     {{user.Name}}
                   </mat-option>
                 </mat-select>
@@ -50,7 +50,8 @@
               <mat-form-field>
                 <mat-label>Geschäft</mat-label>
                 <mat-select class="cell-row" [(ngModel)]="defaultShop" matTooltip="Geschäft auswählen" formControlName="ShopId">
-                  <mat-option *ngFor="let shop of shops  | async" [value]="shop.ShopId">
+                  <mat-option *ngFor="let shop of shops" [value]="shop.ShopId"> 
+                    <!-- //   | async -->
                     {{shop.Name}}
                   </mat-option>
                 </mat-select>

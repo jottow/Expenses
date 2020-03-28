@@ -30,19 +30,22 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
     private service: AusgabenService, 
     private appComponent: AppComponent,
     private ausgabenComponent: AusgabenComponent) {
-    this.defaultAusgabenTyp = 1;
-
+  
    }
 
   ausgabenInputForm: any;
   ausgabenTypen: AusgabenTypSet[];
   users: UserSet[];
   shops: ShopSet[];
-  defaultAusgabenTyp:any;
+
+  // Standard values for base data in dropdowns
+  defaultAusgabenTyp=1;
   defaultUser=1;
   defaultShop=1;
+
+
   currentDate:Date; // Festlegung Calendar auf aktuelles Datum
-  message:string;1 
+  message:string;
   
   ngOnInit() {
     // Initialisieren der Eingabefelder
@@ -96,6 +99,7 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
   }  
 
   resetForm(form?: NgForm) { 
+    console.log('resetForm');
     this.defaultAusgabenTyp=1; 
     if(form!=null){
       this.currentDate=new Date(); //TODO: warum hat sich der Wert auf Date()-1 geändert?
