@@ -366,10 +366,12 @@ var AppComponent = /** @class */ (function () {
         this.allUsers = [];
         this.allAusgabenTypen = [];
         this.allShops = [];
+        // Dropdowns in input form
         this.getUsers();
-        this.getAusgaben();
         this.getAusgabenTypen();
         this.getShops();
+        // expenses list
+        this.getAusgaben();
     };
     AppComponent.prototype.ngOnChanges = function () {
         console.log('app.component OnChanges');
@@ -383,7 +385,7 @@ var AppComponent = /** @class */ (function () {
         this.service.getAllAusgabenTypen().subscribe(function (data) {
             var colorIndex = 0;
             data.forEach(function (at) {
-                _this.allAusgabenTypen.push({ AusgabenTypId: at.Id, Name: at.Name, Color: ChartColorsAusgabenTypen[colorIndex] });
+                _this.allAusgabenTypen.push({ AusgabenTypId: at.AusgabenTypId, Name: at.Name, Color: ChartColorsAusgabenTypen[colorIndex] });
                 colorIndex++;
             });
             _this.ausgabenTypenNames = _this.allAusgabenTypen.map(function (at) { return at.Name; });
@@ -1163,9 +1165,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var src_app_shared_ausgaben_model__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/ausgaben.model */ "./src/app/shared/ausgaben.model.ts");
 /* harmony import */ var src_app_app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/app.component */ "./src/app/app.component.ts");
-/* harmony import */ var src_app_ausgaben_ausgaben_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/ausgaben/ausgaben.component */ "./src/app/ausgaben/ausgaben.component.ts");
-/* harmony import */ var _ausgaben_list_ausgaben_list_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../ausgaben-list/ausgaben-list.component */ "./src/app/ausgaben/ausgaben-list/ausgaben-list.component.ts");
-
+/* harmony import */ var _ausgaben_list_ausgaben_list_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../ausgaben-list/ausgaben-list.component */ "./src/app/ausgaben/ausgaben-list/ausgaben-list.component.ts");
 
 
 
@@ -1174,11 +1174,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var AusgabenInputComponent = /** @class */ (function () {
-    function AusgabenInputComponent(formbuider, service, appComponent, ausgabenComponent) {
+    function AusgabenInputComponent(formbuider, service, appComponent) {
         this.formbuider = formbuider;
         this.service = service;
         this.appComponent = appComponent;
-        this.ausgabenComponent = ausgabenComponent;
         // Standard values for base data in dropdowns
         this.defaultAusgabenTyp = 1;
         this.defaultUser = 1;
@@ -1232,15 +1231,20 @@ var AusgabenInputComponent = /** @class */ (function () {
     };
     AusgabenInputComponent.prototype.resetForm = function (form) {
         console.log('resetForm');
+        console.log('resedefaultAusgabenTyp:' + this.defaultAusgabenTyp);
+        // TODO: reinitialiszation possibly not necessary (ngModel depraceted seeHref:https://angular.io/api/forms/FormControlName#use-with-ngmodel)
         this.defaultAusgabenTyp = 1;
+        this.defaultUser = 1;
+        this.defaultShop = 1;
         if (form != null) {
             this.currentDate = new Date(); //TODO: warum hat sich der Wert auf Date()-1 geändert?
             console.log('currentDate (ResetForm):');
             console.log(this.currentDate);
             form.reset({ Id: '0', AusgabenTypId: this.defaultAusgabenTyp, Datum: this.currentDate, UserId: this.defaultUser, ShopId: this.defaultShop });
         }
-        else
+        else {
             this.ausgabenInputForm.reset({ AusgabenTypId: this.defaultAusgabenTyp });
+        }
         this.message = null;
     };
     AusgabenInputComponent.prototype.addAusgabenEntry = function (ausgaben) {
@@ -1273,7 +1277,7 @@ var AusgabenInputComponent = /** @class */ (function () {
     ], AusgabenInputComponent.prototype, "ausgabeEdit", void 0);
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _ausgaben_list_ausgaben_list_component__WEBPACK_IMPORTED_MODULE_7__["AusgabenListComponent"])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _ausgaben_list_ausgaben_list_component__WEBPACK_IMPORTED_MODULE_6__["AusgabenListComponent"])
     ], AusgabenInputComponent.prototype, "ausgabenListComponent", void 0);
     AusgabenInputComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1282,8 +1286,7 @@ var AusgabenInputComponent = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"],
             src_app_shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_2__["AusgabenService"],
-            src_app_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
-            src_app_ausgaben_ausgaben_component__WEBPACK_IMPORTED_MODULE_6__["AusgabenComponent"]])
+            src_app_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]])
     ], AusgabenInputComponent);
     return AusgabenInputComponent;
 }());

@@ -66,10 +66,15 @@ export class AppComponent implements OnInit, OnChanges {
     this.allUsers=[];
     this.allAusgabenTypen=[];
     this.allShops=[];
+
+    // Dropdowns in input form
     this.getUsers();
-    this.getAusgaben();
     this.getAusgabenTypen();
     this.getShops();
+
+    // expenses list
+    this.getAusgaben();
+   
     
     
     
@@ -91,7 +96,7 @@ export class AppComponent implements OnInit, OnChanges {
       data => {
         let colorIndex = 0;
           data.forEach(at=>{
-          this.allAusgabenTypen.push({AusgabenTypId:at.Id, Name:at.Name, Color:ChartColorsAusgabenTypen[colorIndex]});
+          this.allAusgabenTypen.push({AusgabenTypId:at.AusgabenTypId, Name:at.Name, Color:ChartColorsAusgabenTypen[colorIndex]});
           colorIndex++;
         });
 

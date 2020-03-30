@@ -38,19 +38,6 @@ export class AusgabenComponent {
     this.selMonthChanged.emit(selected);
   }
 
-  // // Dropdowns
-  // loadAllAusgabenTypen(): Observable<Ausgabentyp[]> {  
-  //   return this.service.getAllAusgabenTypen();  
-  //  }
-
-  // loadAllUsers(): Observable<User[]> {  
-  //   return this.service.getAllUsers();  
-  // }
-  
-  // loadAllShops(): Observable<Shop[]> {  
-  //   return this.service.getAllShops();  
-  // }
-  //
-  
+    
 }
 

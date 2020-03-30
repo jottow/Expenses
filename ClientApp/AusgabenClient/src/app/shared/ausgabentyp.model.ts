@@ -1,4 +1,4 @@
 export class Ausgabentyp {
-    Id:number;
+    AusgabenTypId:number;
     Name: string;
 }

@@ -1,14 +1,9 @@
-import { Component, Input, EventEmitter, OnInit, OnChanges } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Ausgabentyp } from 'src/app/shared/ausgabentyp.model';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { AusgabenService } from 'src/app/shared/ausgaben.service';
 import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Ausgaben } from 'src/app/shared/ausgaben.model';
 import { AppComponent } from 'src/app/app.component';
-import {AusgabenComponent} from 'src/app/ausgaben/ausgaben.component';
 import { AusgabenListComponent } from '../ausgaben-list/ausgaben-list.component';
-import { User } from 'src/app/shared/user.model';
-import { Shop } from 'src/app/shared/shop.model';
 import { AusgabenTypSet } from 'src/app/shared/interfaces/ausgabentyp-set';
 import { UserSet } from 'src/app/shared/interfaces/user-set';
 import { ShopSet } from 'src/app/shared/interfaces/shop-set';
@@ -28,8 +23,7 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
 
   constructor(private formbuider: FormBuilder,
     private service: AusgabenService, 
-    private appComponent: AppComponent,
-    private ausgabenComponent: AusgabenComponent) {
+    private appComponent: AppComponent) {
   
    }
 
@@ -100,15 +94,21 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
 
   resetForm(form?: NgForm) { 
     console.log('resetForm');
+    console.log('resedefaultAusgabenTyp:' + this.defaultAusgabenTyp);
+
+    // TODO: reinitialiszation possibly not necessary (ngModel depraceted seeHref:https://angular.io/api/forms/FormControlName#use-with-ngmodel)
     this.defaultAusgabenTyp=1; 
+    this.defaultUser=1;
+    this.defaultShop=1;
     if(form!=null){
       this.currentDate=new Date(); //TODO: warum hat sich der Wert auf Date()-1 geändert?
       console.log('currentDate (ResetForm):');
       console.log(this.currentDate);
       form.reset({Id:'0', AusgabenTypId:this.defaultAusgabenTyp, Datum:this.currentDate, UserId: this.defaultUser, ShopId: this.defaultShop});
     }
-    else
+    else{
       this.ausgabenInputForm.reset({AusgabenTypId:this.defaultAusgabenTyp});
+    }
   
     this.message = null;  
   } 
