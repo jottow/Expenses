@@ -79,7 +79,6 @@ export class AusgabenListComponent implements OnInit{
       this.baseComponent.selectedMonth = selectedMonth;
     }
 
-    console.log('Serviseaufruf');
     console.log(selectedYear);
     console.log(selectedMonth);
     this.service.getAllAusgaben(selectedYear,selectedMonth).subscribe(

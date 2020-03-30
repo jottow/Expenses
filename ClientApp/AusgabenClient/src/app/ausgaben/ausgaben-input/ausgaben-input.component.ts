@@ -82,6 +82,13 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
   onFormSubmit() {  
     const ausgaben = this.ausgabenInputForm.value;  
     console.log(ausgaben);
+    if(this.dateChanged){
+      
+      let ausgabenDatum = ausgaben.Datum;
+      ausgabenDatum.setDate(ausgabenDatum.getDate() + 1);
+      ausgaben.Datum = ausgabenDatum;
+    }
+
     if(ausgaben.Id=='0'){
       this.addAusgabenEntry(ausgaben); 
      }
@@ -92,9 +99,14 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
     this.resetForm(this.ausgabenInputForm); 
   }  
 
+
+  onDateChanged(): void {
+      this.dateChanged=true;
+  }
+
   resetForm(form?: NgForm) { 
     console.log('resetForm');
-    console.log('resedefaultAusgabenTyp:' + this.defaultAusgabenTyp);
+    console.log('defaultAusgabenTyp:' + this.defaultAusgabenTyp);
 
     // TODO: reinitialiszation possibly not necessary (ngModel depraceted seeHref:https://angular.io/api/forms/FormControlName#use-with-ngmodel)
     this.defaultAusgabenTyp=1; 
@@ -136,11 +148,5 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
         console.log(this.message);
       } 
     ) 
-  }
-
-  onDateChanged(selectedDate: any){
-    console.log('DateChanged:' + selectedDate);
-    this.dateChanged=true;
-
   }
 }

@@ -68,10 +68,10 @@ export class DatepickerViewsSelection {
   
  
   initializeDatePicker(){
-    // console.log('selYear:');
-    // console.log(this.selYear);
-    // console.log('selMonth:');
-    // console.log(this.selMonth);
+    console.log('selYear:');
+    console.log(this.selYear);
+    console.log('selMonth:');
+    console.log(this.selMonth);
     this.selectedDate.setValue(new Date(this.selYear, this.selMonth-1, 1));
   
   }

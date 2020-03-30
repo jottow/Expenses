@@ -370,7 +370,7 @@ var AppComponent = /** @class */ (function () {
         this.getUsers();
         this.getAusgabenTypen();
         this.getShops();
-        // expenses list
+        // expenses list, evaluations (Auswertungen)
         this.getAusgaben();
     };
     AppComponent.prototype.ngOnChanges = function () {
@@ -1145,7 +1145,7 @@ var AusgabenAuswertungenComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form name='#ausgabenInputForm' class=\"ausgaben-input-container\" [formGroup]=\"ausgabenInputForm\" (ngSubmit)=\"onFormSubmit(ausgabenInputForm.value)\">\r\n  <mat-card>  \r\n      <mat-card-title>Ausgabe erfassen/ bearbeiten</mat-card-title>\r\n      <mat-card-content>  \r\n         <div class=\"row\">\r\n          <div class=\"col-md-5\">\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Ausgabentyp</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultAusgabenTyp\" matTooltip=\"Ausgabentyp auswählen\" formControlName=\"AusgabenTypId\">\r\n                  <mat-option *ngFor=\"let ausgabentyp of ausgabenTypen\" [value]=\"ausgabentyp.AusgabenTypId\">\r\n                    {{ausgabentyp.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field >\r\n                <input  class=\"cell-row\"  formControlName=\"Betrag\" type=\"number\" step=\"0.01\" matTooltip=\"Betrag in EUR\" matInput placeholder=\"Betrag\">  \r\n              </mat-form-field>  \r\n              <mat-error>  \r\n                <span *ngIf=\"!ausgabenInputForm.get('Betrag').value && ausgabenInputForm.get('Betrag').touched\"></span>  \r\n              </mat-error>  \r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Einkäufer</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultUser\" matTooltip=\"Einkäufer auswählen\" formControlName=\"UserId\">\r\n                  <mat-option *ngFor=\"let user of users\" [value]=\"user.UserId\">\r\n                    {{user.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n           </div>\r\n          </div>\r\n        \r\n          <div class=\"col-md-1\"></div>\r\n          <div class=\"col-md-6\">\r\n            <div class=\"form-group\">\r\n                <mat-form-field class=\"cell-row\">  \r\n                    <input  class=\"cell-row\" formControlName=\"Datum\"  matTooltip=\"Datum\" matInput  [matDatepicker]=\"picker\" placeholder=\"Datum\">  \r\n                    <mat-datepicker-toggle  class=\"cell-row\" matSuffix [for]=\"picker\"></mat-datepicker-toggle>  \r\n                      <mat-datepicker  class=\"cell-row\" [startAt]=\"currentDate\" #picker (selectedChanged)=\"onDateChanged($event)\"></mat-datepicker> \r\n                </mat-form-field>  \r\n                <mat-error>  \r\n                  <span *ngIf=\"!ausgabenInputForm.get('Datum').value && ausgabenInputForm.get('Datum').touched\"></span>  \r\n                </mat-error>  \r\n            </div>   \r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Geschäft</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultShop\" matTooltip=\"Geschäft auswählen\" formControlName=\"ShopId\">\r\n                  <mat-option *ngFor=\"let shop of shops\" [value]=\"shop.ShopId\"> \r\n                    <!-- //   | async -->\r\n                    {{shop.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div> \r\n            <div class=\"form-group\">\r\n              <mat-form-field >  \r\n                  <input  class=\"cell-row\" formControlName=\"Bemerkung\"  matTooltip=\"Bemerkung\" matInput placeholder=\"Bemerkung\">  \r\n              </mat-form-field>  \r\n            </div>                                 \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-6\">\r\n            <button type=\"submit\" mat-raised-button color=\"accent\"matTooltip=\"Speichern\"[disabled]=\"!ausgabenInputForm.valid\"> Speichern</button>      \r\n          </div>\r\n          <div class=\"col-md-6\">          \r\n            <button type=\"button\" mat-raised-button color=\"accent\" matTooltip=\"Eingaben zurücksetzen\" (click)=\"resetForm(ausgabenInputForm)\"> Zurücksetzen</button>  \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-12\">\r\n            <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:12px;\" Class=\"success\" align=\"left\">  \r\n                {{message}}  \r\n            </p>  \r\n          </div>\r\n        </div>\r\n    </mat-card-content>\r\n  </mat-card>\r\n</form>"
+module.exports = "<form name='#ausgabenInputForm' class=\"ausgaben-input-container\" [formGroup]=\"ausgabenInputForm\" (ngSubmit)=\"onFormSubmit(ausgabenInputForm.value)\">\r\n  <mat-card>  \r\n      <mat-card-title>Ausgabe erfassen/ bearbeiten</mat-card-title>\r\n      <mat-card-content>  \r\n         <div class=\"row\">\r\n          <div class=\"col-md-5\">\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Ausgabentyp</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultAusgabenTyp\" matTooltip=\"Ausgabentyp auswählen\" formControlName=\"AusgabenTypId\">\r\n                  <mat-option *ngFor=\"let ausgabentyp of ausgabenTypen\" [value]=\"ausgabentyp.AusgabenTypId\">\r\n                    {{ausgabentyp.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field >\r\n                <input  class=\"cell-row\"  formControlName=\"Betrag\" type=\"number\" step=\"0.01\" matTooltip=\"Betrag in EUR\" matInput placeholder=\"Betrag\">  \r\n              </mat-form-field>  \r\n              <mat-error>  \r\n                <span *ngIf=\"!ausgabenInputForm.get('Betrag').value && ausgabenInputForm.get('Betrag').touched\"></span>  \r\n              </mat-error>  \r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Einkäufer</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultUser\" matTooltip=\"Einkäufer auswählen\" formControlName=\"UserId\">\r\n                  <mat-option *ngFor=\"let user of users\" [value]=\"user.UserId\">\r\n                    {{user.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n           </div>\r\n          </div>\r\n        \r\n          <div class=\"col-md-1\"></div>\r\n          <div class=\"col-md-6\">\r\n            <div class=\"form-group\">\r\n                <mat-form-field class=\"cell-row\">  \r\n                    <input  class=\"cell-row\" formControlName=\"Datum\"  (dateChange)=\"onDateChanged()\" matTooltip=\"Datum\" matInput  [matDatepicker]=\"picker\" placeholder=\"Datum\">  \r\n                    <mat-datepicker-toggle  class=\"cell-row\" matSuffix [for]=\"picker\"></mat-datepicker-toggle>  \r\n                      <mat-datepicker #picker class=\"cell-row\" [startAt]=\"currentDate\"></mat-datepicker> \r\n                </mat-form-field>  \r\n                <mat-error>  \r\n                  <span *ngIf=\"!ausgabenInputForm.get('Datum').value && ausgabenInputForm.get('Datum').touched\"></span>  \r\n                </mat-error>  \r\n            </div>   \r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Geschäft</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultShop\" matTooltip=\"Geschäft auswählen\" formControlName=\"ShopId\">\r\n                  <mat-option *ngFor=\"let shop of shops\" [value]=\"shop.ShopId\"> \r\n                    <!-- //   | async -->\r\n                    {{shop.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div> \r\n            <div class=\"form-group\">\r\n              <mat-form-field >  \r\n                  <input  class=\"cell-row\" formControlName=\"Bemerkung\"  matTooltip=\"Bemerkung\" matInput placeholder=\"Bemerkung\">  \r\n              </mat-form-field>  \r\n            </div>                                 \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-6\">\r\n            <button type=\"submit\" mat-raised-button color=\"accent\"matTooltip=\"Speichern\"[disabled]=\"!ausgabenInputForm.valid\"> Speichern</button>      \r\n          </div>\r\n          <div class=\"col-md-6\">          \r\n            <button type=\"button\" mat-raised-button color=\"accent\" matTooltip=\"Eingaben zurücksetzen\" (click)=\"resetForm(ausgabenInputForm)\"> Zurücksetzen</button>  \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-12\">\r\n            <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:12px;\" Class=\"success\" align=\"left\">  \r\n                {{message}}  \r\n            </p>  \r\n          </div>\r\n        </div>\r\n    </mat-card-content>\r\n  </mat-card>\r\n</form>"
 
 /***/ }),
 
@@ -1221,6 +1221,11 @@ var AusgabenInputComponent = /** @class */ (function () {
     AusgabenInputComponent.prototype.onFormSubmit = function () {
         var ausgaben = this.ausgabenInputForm.value;
         console.log(ausgaben);
+        if (this.dateChanged) {
+            var ausgabenDatum = ausgaben.Datum;
+            ausgabenDatum.setDate(ausgabenDatum.getDate() + 1);
+            ausgaben.Datum = ausgabenDatum;
+        }
         if (ausgaben.Id == '0') {
             this.addAusgabenEntry(ausgaben);
         }
@@ -1229,9 +1234,12 @@ var AusgabenInputComponent = /** @class */ (function () {
         }
         this.resetForm(this.ausgabenInputForm);
     };
+    AusgabenInputComponent.prototype.onDateChanged = function () {
+        this.dateChanged = true;
+    };
     AusgabenInputComponent.prototype.resetForm = function (form) {
         console.log('resetForm');
-        console.log('resedefaultAusgabenTyp:' + this.defaultAusgabenTyp);
+        console.log('defaultAusgabenTyp:' + this.defaultAusgabenTyp);
         // TODO: reinitialiszation possibly not necessary (ngModel depraceted seeHref:https://angular.io/api/forms/FormControlName#use-with-ngmodel)
         this.defaultAusgabenTyp = 1;
         this.defaultUser = 1;
@@ -1266,10 +1274,6 @@ var AusgabenInputComponent = /** @class */ (function () {
             _this.ausgabenListComponent.refreshResults();
             console.log(_this.message);
         });
-    };
-    AusgabenInputComponent.prototype.onDateChanged = function (selectedDate) {
-        console.log('DateChanged:' + selectedDate);
-        this.dateChanged = true;
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
@@ -1376,7 +1380,6 @@ var AusgabenListComponent = /** @class */ (function () {
             this.baseComponent.selectedYear = selectedYear;
             this.baseComponent.selectedMonth = selectedMonth;
         }
-        console.log('Serviseaufruf');
         console.log(selectedYear);
         console.log(selectedMonth);
         this.service.getAllAusgaben(selectedYear, selectedMonth).subscribe(function (data) {
@@ -1502,13 +1505,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AusgabenComponent", function() { return AusgabenComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/ausgaben.service */ "./src/app/shared/ausgaben.service.ts");
-
 
 
 var AusgabenComponent = /** @class */ (function () {
-    function AusgabenComponent(service) {
-        this.service = service;
+    function AusgabenComponent() {
         this.selYearChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         this.selMonthChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
     }
@@ -1543,8 +1543,7 @@ var AusgabenComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-ausgaben',
             template: __webpack_require__(/*! ./ausgaben.component.html */ "./src/app/ausgaben/ausgaben.component.html")
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_2__["AusgabenService"]])
+        })
     ], AusgabenComponent);
     return AusgabenComponent;
 }());
@@ -1844,10 +1843,10 @@ var DatepickerViewsSelection = /** @class */ (function () {
         this.events.push('${type}: ${event.value}');
     };
     DatepickerViewsSelection.prototype.initializeDatePicker = function () {
-        // console.log('selYear:');
-        // console.log(this.selYear);
-        // console.log('selMonth:');
-        // console.log(this.selMonth);
+        console.log('selYear:');
+        console.log(this.selYear);
+        console.log('selMonth:');
+        console.log(this.selMonth);
         this.selectedDate.setValue(new Date(this.selYear, this.selMonth - 1, 1));
     };
     DatepickerViewsSelection.prototype.chosenYearHandler = function (normalizedYear) {

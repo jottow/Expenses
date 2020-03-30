@@ -22,9 +22,6 @@ export class AusgabenComponent {
   ausgabeEdit: Ausgaben;
   
   
-  constructor(private service:AusgabenService) { }
-
- 
   getAusgabenUpdate(selected: Ausgaben){
     this.ausgabeEdit = selected;
   }
@@ -33,11 +30,10 @@ export class AusgabenComponent {
     console.log('gewähltes Jahr:' + selected);
     this.selYearChanged.emit(selected);
   }
+
   getMonthUpdate(selected: number){
     console.log('gewählter Monat:' + selected);
     this.selMonthChanged.emit(selected);
   }
-
-    
 }
 

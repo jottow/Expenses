@@ -1,10 +1,10 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { ChartColorsUser } from './shared/enums/chart-colors-user.enum';
-import { UserSet } from './shared/interfaces/user-set';
 import { AusgabenService } from './shared/ausgaben.service';
 import { Observable } from 'rxjs';
 import { Ausgaben } from './shared/ausgaben.model';
-import { Ausgabentyp } from './shared/ausgabentyp.model';
+import { AusgabenTypSet } from './shared/interfaces/ausgabentyp-set';
+import { UserSet } from './shared/interfaces/user-set';
 import { ShopSet } from './shared/interfaces/shop-set';
 import { ChartColorsShops } from './shared/enums/chart-colors.shop.enum';
 
@@ -17,11 +17,6 @@ enum ChartColorsAusgabenTypen {
   "orange"
 }
 
-interface AusgabenTypSet {
-  AusgabenTypId: number;
-  Name:string;
-  Color:string;
-} 
 
 @Component({
   selector: 'app-root',
@@ -56,40 +51,36 @@ export class AppComponent implements OnInit, OnChanges {
   
   ];
  
-  constructor(private service: AusgabenService) {
-  }
+    constructor(private service: AusgabenService) {
+    }
 
-  ngOnInit(){
-    console.log('app.component OnInit');
-    this.selectedYear = new Date().getFullYear();
-    this.selectedMonth = new Date().getMonth() + 1; // getMonth() is 0-based
-    this.allUsers=[];
-    this.allAusgabenTypen=[];
-    this.allShops=[];
+    ngOnInit(){
+      console.log('app.component OnInit');
+      this.selectedYear = new Date().getFullYear();
+      this.selectedMonth = new Date().getMonth() + 1; // getMonth() is 0-based
+      this.allUsers=[];
+      this.allAusgabenTypen=[];
+      this.allShops=[];
 
-    // Dropdowns in input form
-    this.getUsers();
-    this.getAusgabenTypen();
-    this.getShops();
+      // Dropdowns in input form
+      this.getUsers();
+      this.getAusgabenTypen();
+      this.getShops();
 
-    // expenses list
-    this.getAusgaben();
-   
-    
-    
-    
-  }
+      // expenses list, evaluations (Auswertungen)
+      this.getAusgaben();
+      
+    }
 
-  ngOnChanges(){
-    console.log('app.component OnChanges');
-    this.getAusgaben();
-  }
+    ngOnChanges(){
+      console.log('app.component OnChanges');
+      this.getAusgaben();
+    }
 
- 
 
   getAusgaben(){
-    this.allAusgaben= this.service.getAllAusgaben(this.selectedYear, this.selectedMonth);
-  }
+      this.allAusgaben= this.service.getAllAusgaben(this.selectedYear, this.selectedMonth);
+    }
 
   getAusgabenTypen(){
     this.service.getAllAusgabenTypen().subscribe(
@@ -110,7 +101,7 @@ export class AppComponent implements OnInit, OnChanges {
     );
   }
 
- getUsers(){
+  getUsers(){
     this.service.getAllUsers().subscribe(
       data => {
           let colorIndex = 0;
@@ -152,7 +143,6 @@ export class AppComponent implements OnInit, OnChanges {
           console.log(this.shopNames);
         }  
       );
-
   }
 
   // fügt "0"-en vor übergebene Zahl, bis "size" erreicht ist:
@@ -165,7 +155,7 @@ export class AppComponent implements OnInit, OnChanges {
 
     return s;
   }
- 
+
 
   // TODO: bisher nicht genutzt ==> Aggregation
   groupBy(list:number[], keyGetter) {
@@ -186,7 +176,7 @@ export class AppComponent implements OnInit, OnChanges {
   }
 
   getYearUpdate(selected: number){
-   // console.log('gewähltes Jahr (app.component):' + selected);
+    // console.log('gewähltes Jahr (app.component):' + selected);
     this.selectedYear=selected;
     this.getAusgaben();
   }
