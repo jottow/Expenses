@@ -7,7 +7,7 @@ var AusgabenComponent = /** @class */ (function () {
         this.selYearChanged = new EventEmitter();
         this.selMonthChanged = new EventEmitter();
     }
-    AusgabenComponent.prototype.getAusgabenUpdate = function (selected) {
+    AusgabenComponent.prototype.getSelectedAusgabe = function (selected) {
         this.ausgabeEdit = selected;
     };
     AusgabenComponent.prototype.getYearUpdate = function (selected) {

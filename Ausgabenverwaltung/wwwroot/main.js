@@ -317,7 +317,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h3 style=\"margin-top: 10px!important;\">\r\n  Ausgabenverwaltung\r\n</h3>\r\n<mat-tab-group>\r\n  <mat-tab label=\"Erfassung\">\r\n    <ng-template matTabContent>\r\n      <app-ausgaben [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\"  (selYearChanged)=\"getYearUpdate($event)\" \r\n      (selMonthChanged)=\"getMonthUpdate($event)\" >\r\n      </app-ausgaben>\r\n    </ng-template>\r\n  </mat-tab>\r\n  <mat-tab label=\"Auswertungen\">\r\n    <ng-template matTabContent>\r\n      <mat-tab-group>            \r\n        <mat-tab *ngFor=\"let tab of prefTabs\" label=\"{{tab.label}}\">\r\n          <div *ngIf=\"tab.label === 'Ausgabenverläufe'\">\r\n            <app-ausgaben-auswertungen [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\" (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\">lädt...</app-ausgaben-auswertungen>\r\n          </div>\r\n          <div *ngIf=\"tab.label === 'Weitere Statistiken'\">\r\n            <app-ausgaben-kreisdiagramme [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\" (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\">lädt...</app-ausgaben-kreisdiagramme>\r\n          </div>\r\n        </mat-tab>\r\n      </mat-tab-group>\r\n    </ng-template>\r\n  </mat-tab>\r\n</mat-tab-group>\r\n"
+module.exports = "<h3 style=\"margin-top: 10px!important;\">\r\n  Ausgabenverwaltung\r\n</h3>\r\n<mat-tab-group>\r\n  <mat-tab label=\"Erfassung\">\r\n    <ng-template matTabContent>\r\n      <app-ausgaben [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\"  (selYearChanged)=\"getYearUpdate($event)\" \r\n      (selMonthChanged)=\"getMonthUpdate($event)\" >\r\n      </app-ausgaben>\r\n    </ng-template>\r\n  </mat-tab>\r\n  <mat-tab label=\"Auswertungen\">\r\n    <ng-template matTabContent>\r\n      <mat-tab-group>  \r\n        <!-- [] means            -->\r\n        <mat-tab *ngFor=\"let tab of prefTabs\" label=\"{{tab.label}}\">\r\n          <div *ngIf=\"tab.label === 'Ausgabenverläufe'\">\r\n            <app-ausgaben-auswertungen [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\" (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\">lädt...</app-ausgaben-auswertungen>\r\n          </div>\r\n          <div *ngIf=\"tab.label === 'Weitere Statistiken'\">\r\n            <app-ausgaben-kreisdiagramme [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\" (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\">lädt...</app-ausgaben-kreisdiagramme>\r\n          </div>\r\n        </mat-tab>\r\n      </mat-tab-group>\r\n    </ng-template>\r\n  </mat-tab>\r\n</mat-tab-group>\r\n"
 
 /***/ }),
 
@@ -1220,6 +1220,7 @@ var AusgabenInputComponent = /** @class */ (function () {
     };
     AusgabenInputComponent.prototype.onFormSubmit = function () {
         var ausgaben = this.ausgabenInputForm.value;
+        console.log('submit');
         console.log(ausgaben);
         if (this.dateChanged) {
             var ausgabenDatum = ausgaben.Datum;
@@ -1422,6 +1423,7 @@ var AusgabenListComponent = /** @class */ (function () {
             function (err) {
                 console.log(err);
             });
+            this.ausgabenInputComponent.resetForm();
         }
     };
     AusgabenListComponent.prototype.getYearUpdate = function (selected) {
@@ -1489,7 +1491,7 @@ var AusgabenListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ausgaben-main-container\">\r\n  <!-- <h5 class=\"display 4.text-center\"> -->\r\n    <span style=\"font-weight:bold\">Erfassung und Übersicht</span> \r\n  <!-- </h5> -->\r\n  <hr>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-4\">\r\n       <!-- ausgabenListComponent wird von ausgabenListComponent empfangen.\r\n      Hierdurch kann in ausgaben-imput.component die Methode refreshList() aufgerufen werden.\r\n     ausgabeEdit enthält die Daten des markierten Datensatzes, die von ausgabenListComponent emittiert wurden. -->\r\n      <app-ausgaben-input [ausgabenListComponent]=\"ausgabenListComponent\" [ausgabeEdit]=\"ausgabeEdit\">lädt...</app-ausgaben-input>\r\n   </div>\r\n    <div class=\"col-md-8\">\r\n      <!-- ausgabenListComponent wird mit  #ausgabenListComponent veröffentlicht -->\r\n      <app-ausgabenlist #ausgabenListComponent (ausgabeEdit)=\"getAusgabenUpdate($event)\" (selYear)=\"getYearUpdate($event)\" (selMonth)=\"getMonthUpdate($event)\" >lädt...</app-ausgabenlist> \r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"ausgaben-main-container\">\r\n  <!-- <h5 class=\"display 4.text-center\"> -->\r\n    <span style=\"font-weight:bold\">Erfassung und Übersicht</span> \r\n  <!-- </h5> -->\r\n  <hr>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-4\">\r\n       <!-- ausgewählte Ausgabe (ausgabeEdit) wird von ausgabenListComponent empfangen.\r\n         ausgabeEdit enthält die Daten des markierten Datensatzes, die von ausgabenListComponent emittiert wurden. \r\n         veröffentlichte ausgabenListComponent wird für ausgabenInputComponent verfügbar gemacht.\r\n         Hierdurch kann in ausgaben-imput.component die Methode refreshResults() von ausgabenListComponent aufgerufen werden.-->\r\n      <app-ausgaben-input [ausgabenListComponent]=\"ausgabenListComponent\" [ausgabeEdit]=\"ausgabeEdit\">lädt...</app-ausgaben-input>\r\n   </div>\r\n    <div class=\"col-md-8\">\r\n      <!-- ausgewählte Ausgabe (ausgabeEdit) wird mit #ausgabenListComponent veröffentlicht\r\n        -->\r\n      <app-ausgabenlist #ausgabenListComponent (ausgabeEdit)=\"getSelectedAusgabe($event)\" (selYear)=\"getYearUpdate($event)\" (selMonth)=\"getMonthUpdate($event)\" >lädt...</app-ausgabenlist> \r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1512,7 +1514,7 @@ var AusgabenComponent = /** @class */ (function () {
         this.selYearChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         this.selMonthChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
     }
-    AusgabenComponent.prototype.getAusgabenUpdate = function (selected) {
+    AusgabenComponent.prototype.getSelectedAusgabe = function (selected) {
         this.ausgabeEdit = selected;
     };
     AusgabenComponent.prototype.getYearUpdate = function (selected) {

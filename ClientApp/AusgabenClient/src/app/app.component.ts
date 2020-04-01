@@ -26,10 +26,11 @@ enum ChartColorsAusgabenTypen {
 
 export class AppComponent implements OnInit, OnChanges {
   
-  
   title = 'Ausgaben-Client';
   selectedYear:number;
   selectedMonth:number;
+
+  ausgabenInputForm:any;
   allAusgaben: Observable<Ausgaben[]>;
 
   allAusgabenTypen: AusgabenTypSet[];

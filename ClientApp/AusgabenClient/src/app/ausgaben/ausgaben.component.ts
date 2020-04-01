@@ -1,10 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { Ausgaben } from '../shared/ausgaben.model';
-import { AusgabenService } from '../shared/ausgaben.service';
-import { Observable } from 'rxjs';
-import { Ausgabentyp } from '../shared/ausgabentyp.model';
-import { User } from '../shared/user.model';
-import { Shop } from '../shared/shop.model';
 
 
 @Component({
@@ -22,7 +17,7 @@ export class AusgabenComponent {
   ausgabeEdit: Ausgaben;
   
   
-  getAusgabenUpdate(selected: Ausgaben){
+  getSelectedAusgabe(selected: Ausgaben){
     this.ausgabeEdit = selected;
   }
 

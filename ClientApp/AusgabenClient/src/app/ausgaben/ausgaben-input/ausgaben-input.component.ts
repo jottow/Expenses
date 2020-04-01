@@ -81,6 +81,7 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
 
   onFormSubmit() {  
     const ausgaben = this.ausgabenInputForm.value;  
+    console.log('submit');
     console.log(ausgaben);
     if(this.dateChanged){
       

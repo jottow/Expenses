@@ -11,7 +11,8 @@
   </mat-tab>
   <mat-tab label="Auswertungen">
     <ng-template matTabContent>
-      <mat-tab-group>            
+      <mat-tab-group>  
+        <!-- [] means            -->
         <mat-tab *ngFor="let tab of prefTabs" label="{{tab.label}}">
           <div *ngIf="tab.label === 'Ausgabenverläufe'">
             <app-ausgaben-auswertungen [selYear]="selectedYear" [selMonth]="selectedMonth" (selYearChanged)="getYearUpdate($event)" (selMonthChanged)="getMonthUpdate($event)">lädt...</app-ausgaben-auswertungen>
