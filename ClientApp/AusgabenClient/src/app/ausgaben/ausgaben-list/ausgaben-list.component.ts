@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output, ViewChild, Input, OnChanges } 
 import { HttpClient } from '@angular/common/http';
 import { AusgabenService } from 'src/app/shared/ausgaben.service';
 import {AppComponent} from 'src/app/app.component'; 
-import {AusgabenInputComponent} from 'src/app/ausgaben/ausgaben-input/ausgaben-input.component'; 
 import { MatTableDataSource, MatSort, MatPaginator, MatTable } from '@angular/material';
 import 'rxjs/add/observable/of';
 import { Ausgaben } from 'src/app/shared/ausgaben.model';
@@ -29,7 +28,7 @@ export class AusgabenListComponent implements OnInit{
   @Output() selMonthChanged = new EventEmitter<number>();
   @Input() selYear: number;
   @Input() selMonth: number;
-  ausgabenInputComponent: AusgabenInputComponent;
+ 
   
   message: string;
   ausgabeTypName: string;
@@ -105,13 +104,25 @@ export class AusgabenListComponent implements OnInit{
   }
 
   // Aufruf, wenn Zeile in Aufgabenliste ausgewählt
-  loadAusgabeToEdit(ausgabe: Ausgaben) { 
-    console.log('ausgewählt:'+ ausgabe.Id); 
-    this.service.getAusgabeById(ausgabe.Id).subscribe(ausgabe=> {  
-      this.message = null;  
-      this.ausgabeEdit.emit(ausgabe);  
-      
-    });  
+  loadAusgabeToEdit(ausgabe?: Ausgaben) { 
+    if(ausgabe){
+      console.log('ausgewählt:'+ ausgabe.Id); 
+      this.service.getAusgabeById(ausgabe.Id).subscribe(ausgabe=> {  
+        this.message = null;  
+      });  
+    }
+    else{
+      console.log('Initialize after deletion');
+      let ausgabeInit=new Ausgaben();
+      ausgabeInit.Id=0;
+      ausgabeInit.AusgabenTypId=1;
+      ausgabeInit.Betrag=0;
+      ausgabeInit.ShopId=1;
+      ausgabeInit.UserId=1;
+      ausgabeInit.Bemerkung='';
+      ausgabe=ausgabeInit;
+    }
+    this.ausgabeEdit.emit(ausgabe);  
   }
 
   onDelete(Id){
@@ -124,7 +135,7 @@ export class AusgabenListComponent implements OnInit{
           data => {
             this.dataSource.data=data;
             this.resourcesLoaded=true;
-           
+            this.loadAusgabeToEdit();
           }
         );},
         //this.toastr.warning('Deleted successfully', 'Payment Detail Register');},
@@ -132,8 +143,6 @@ export class AusgabenListComponent implements OnInit{
            console.log(err);
          }
       );
-
-      this.ausgabenInputComponent.resetForm();
     }
   }
 

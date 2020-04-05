@@ -4,18 +4,21 @@
 <mat-tab-group>
   <mat-tab label="Erfassung">
     <ng-template matTabContent>
-      <app-ausgaben [selYear]="selectedYear" [selMonth]="selectedMonth"  (selYearChanged)="getYearUpdate($event)" 
-      (selMonthChanged)="getMonthUpdate($event)" >
+          <!-- [] imported from parent, () exported to parent  -->
+      <app-ausgaben [selYear]="selectedYear" [selMonth]="selectedMonth" 
+       (selYearChanged)="getYearUpdate($event)" (selMonthChanged)="getMonthUpdate($event)" >
       </app-ausgaben>
     </ng-template>
   </mat-tab>
   <mat-tab label="Auswertungen">
     <ng-template matTabContent>
       <mat-tab-group>  
-        <!-- [] means            -->
+        <!-- [] imported from parent, () exported to parent  -->
         <mat-tab *ngFor="let tab of prefTabs" label="{{tab.label}}">
           <div *ngIf="tab.label === 'Ausgabenverläufe'">
-            <app-ausgaben-auswertungen [selYear]="selectedYear" [selMonth]="selectedMonth" (selYearChanged)="getYearUpdate($event)" (selMonthChanged)="getMonthUpdate($event)">lädt...</app-ausgaben-auswertungen>
+            <app-ausgaben-auswertungen [selYear]="selectedYear" 
+                [selMonth]="selectedMonth" (selYearChanged)="getYearUpdate($event)" 
+                (selMonthChanged)="getMonthUpdate($event)">lädt...</app-ausgaben-auswertungen>
           </div>
           <div *ngIf="tab.label === 'Weitere Statistiken'">
             <app-ausgaben-kreisdiagramme [selYear]="selectedYear" [selMonth]="selectedMonth" (selYearChanged)="getYearUpdate($event)" (selMonthChanged)="getMonthUpdate($event)">lädt...</app-ausgaben-kreisdiagramme>

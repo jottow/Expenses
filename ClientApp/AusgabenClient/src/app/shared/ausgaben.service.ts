@@ -32,13 +32,13 @@ export class AusgabenService {
     return this.http.get<Ausgaben[]>(this.url + '/ausgaben')
     .map(res => {
       res.forEach(r=> {
-        this.getAusgabenTypById(r.AusgabenTypId.toString()).subscribe(ausgabeTyp=> {
+        this.getAusgabenTypById(r.AusgabenTypId).subscribe(ausgabeTyp=> {
             r.AusgabenTyp=ausgabeTyp.Name;
           });
           this.getUserById(r.UserId.toString()).subscribe(user=> {
             r.User=user.Name;
           })
-          this.getShopById(r.ShopId.toString()).subscribe(shop=> {
+          this.getShopById(r.ShopId).subscribe(shop=> {
           r.Shop=shop.Name;
         })
       });
@@ -58,8 +58,8 @@ export class AusgabenService {
     });
    } 
 
-  getAusgabeById(ausgabenId: string): Observable<Ausgaben> {  
-    return this.http.get<Ausgaben>(this.url + '/ausgaben/' + ausgabenId);  
+  getAusgabeById(ausgabenId: number): Observable<Ausgaben> {  
+    return this.http.get<Ausgaben>(this.url + '/ausgaben/' + ausgabenId.toString());  
   } 
   
   addNewAusgabe(ausgaben: Ausgaben): Observable<Ausgaben> {  
@@ -78,7 +78,7 @@ export class AusgabenService {
       return this.http.get<Ausgabentyp[]>(this.url + '/ausgabentyp');  
   } 
 
-  getAusgabenTypById(id: string): Observable<Ausgabentyp> {  
+  getAusgabenTypById(id: number): Observable<Ausgabentyp> {  
       return this.http.get<Ausgabentyp>(this.url + '/ausgabentyp/' + id );  
   } 
 
@@ -96,7 +96,7 @@ export class AusgabenService {
     return this.http.get<Shop[]>(this.url + '/shop');  
   } 
 
-  getShopById(id: string): Observable<Shop> {  
+  getShopById(id: number): Observable<Shop> {  
     return this.http.get<Shop>(this.url + '/shop/' + id );  
   } 
 

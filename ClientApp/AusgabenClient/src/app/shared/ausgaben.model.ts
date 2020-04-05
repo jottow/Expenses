@@ -1,12 +1,12 @@
 import { Ausgabentyp } from './ausgabentyp.model';
 
 export class Ausgaben {
-    Id:string;
-    AusgabenTypId:string;
+    Id:number;
+    AusgabenTypId:number;
     AusgabenTyp:string;
     UserId:number;
     User:string;
-    ShopId: string;
+    ShopId: number;
     Shop: string;
     Betrag: number;
     Datum: Date;

@@ -317,7 +317,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h3 style=\"margin-top: 10px!important;\">\r\n  Ausgabenverwaltung\r\n</h3>\r\n<mat-tab-group>\r\n  <mat-tab label=\"Erfassung\">\r\n    <ng-template matTabContent>\r\n      <app-ausgaben [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\"  (selYearChanged)=\"getYearUpdate($event)\" \r\n      (selMonthChanged)=\"getMonthUpdate($event)\" >\r\n      </app-ausgaben>\r\n    </ng-template>\r\n  </mat-tab>\r\n  <mat-tab label=\"Auswertungen\">\r\n    <ng-template matTabContent>\r\n      <mat-tab-group>  \r\n        <!-- [] means            -->\r\n        <mat-tab *ngFor=\"let tab of prefTabs\" label=\"{{tab.label}}\">\r\n          <div *ngIf=\"tab.label === 'Ausgabenverläufe'\">\r\n            <app-ausgaben-auswertungen [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\" (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\">lädt...</app-ausgaben-auswertungen>\r\n          </div>\r\n          <div *ngIf=\"tab.label === 'Weitere Statistiken'\">\r\n            <app-ausgaben-kreisdiagramme [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\" (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\">lädt...</app-ausgaben-kreisdiagramme>\r\n          </div>\r\n        </mat-tab>\r\n      </mat-tab-group>\r\n    </ng-template>\r\n  </mat-tab>\r\n</mat-tab-group>\r\n"
+module.exports = "<h3 style=\"margin-top: 10px!important;\">\r\n  Ausgabenverwaltung\r\n</h3>\r\n<mat-tab-group>\r\n  <mat-tab label=\"Erfassung\">\r\n    <ng-template matTabContent>\r\n          <!-- [] imported from parent, () exported to parent  -->\r\n      <app-ausgaben [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\" \r\n       (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\" >\r\n      </app-ausgaben>\r\n    </ng-template>\r\n  </mat-tab>\r\n  <mat-tab label=\"Auswertungen\">\r\n    <ng-template matTabContent>\r\n      <mat-tab-group>  \r\n        <!-- [] imported from parent, () exported to parent  -->\r\n        <mat-tab *ngFor=\"let tab of prefTabs\" label=\"{{tab.label}}\">\r\n          <div *ngIf=\"tab.label === 'Ausgabenverläufe'\">\r\n            <app-ausgaben-auswertungen [selYear]=\"selectedYear\" \r\n                [selMonth]=\"selectedMonth\" (selYearChanged)=\"getYearUpdate($event)\" \r\n                (selMonthChanged)=\"getMonthUpdate($event)\">lädt...</app-ausgaben-auswertungen>\r\n          </div>\r\n          <div *ngIf=\"tab.label === 'Weitere Statistiken'\">\r\n            <app-ausgaben-kreisdiagramme [selYear]=\"selectedYear\" [selMonth]=\"selectedMonth\" (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\">lädt...</app-ausgaben-kreisdiagramme>\r\n          </div>\r\n        </mat-tab>\r\n      </mat-tab-group>\r\n    </ng-template>\r\n  </mat-tab>\r\n</mat-tab-group>\r\n"
 
 /***/ }),
 
@@ -1307,7 +1307,7 @@ var AusgabenInputComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n  <mat-card *ngIf=\"!resourcesLoaded\" style=\"display: flex; justify-content: center; align-items: center\">\r\n <mat-progress-spinner \r\n   color=\"primary\" \r\n   mode=\"indeterminate\">\r\n </mat-progress-spinner>\r\n </mat-card>\r\n  <mat-card style=\"min-width:800px\">  \r\n    <mat-card-title>Ausgabenübersicht</mat-card-title>\r\n    <mat-card-content> \r\n      <div class=\"row\"  *ngIf=\"resourcesLoaded\" >\r\n        <!-- <div class=\"col-md-3\">\r\n          <div class=\"form-group\">\r\n            <mat-form-field>\r\n              <mat-label>Jahr</mat-label>\r\n              <mat-select [(ngModel)]=\"selectedYear\" [(value)]=\"selectedYear\" (selectionChange)=\"refreshResults()\" matTooltip=\"Jahr auswählen\">\r\n                <mat-option *ngFor=\"let year of yearList\" [value]=\"year\">\r\n                  {{year}}\r\n                </mat-option>\r\n              </mat-select>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-md-3\">\r\n          <div class=\"form-group\">\r\n            <mat-form-field>\r\n              <mat-label>Monat</mat-label>\r\n              <mat-select [(ngModel)]=\"selectedMonth\" [(value)]=\"selectedMonth\" (selectionChange)=\"refreshResults()\" matTooltip=\"Monat auswählen\">\r\n                <mat-option *ngFor=\"let month of monthList\" [value]=\"month.Value\">\r\n                  {{month.Text}}\r\n                </mat-option>\r\n              </mat-select>\r\n            </mat-form-field>\r\n          </div>\r\n        </div> -->\r\n        <div class=\"col-md-4\">\r\n          <app-month-picker  [selYear]=\"selYear\" [selMonth]=\"selMonth\" (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\" ></app-month-picker>\r\n        </div>\r\n        <div class=\"col-md-8\">\r\n          <div class=\"form-group\">                  \r\n            <mat-form-field>\r\n              <input (keyup)=\"applyFilter($event.target.value)\" matInput placeholder=\"Filter\">\r\n            </mat-form-field>\r\n          </div> \r\n        </div>\r\n      </div>\r\n      <div class=\"mat-elevation-z8\">\r\n        <mat-table *ngIf=\"resourcesLoaded\" [dataSource]=\"dataSource\"  matSort >\r\n          <ng-container matColumnDef=\"AusgabenTyp\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header> Ausgabentyp </mat-header-cell>\r\n            <mat-cell class=\"cell-row\" *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.AusgabenTyp}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef> Gesamtausgaben </td>\r\n          </ng-container>\r\n          <ng-container matColumnDef=\"Betrag\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header> Betrag </mat-header-cell>\r\n            <mat-cell class=\"cell-row\"  *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Betrag | currency:'EUR'}} </mat-cell>\r\n            <mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency: 'EUR'}} </mat-footer-cell>\r\n          </ng-container>\r\n          <ng-container matColumnDef=\"Datum\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header>Datum</mat-header-cell>\r\n            <mat-cell class=\"cell-row\" *matCellDef=\"let ausgabe\"  (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Datum  | date:'dd.MM.yyyy'}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>\r\n          <ng-container matColumnDef=\"User\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header>Einkäufer </mat-header-cell>\r\n            <mat-cell  class=\"cell-row\" *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.User}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>     \r\n          <ng-container matColumnDef=\"Shop\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header>Geschäft </mat-header-cell>\r\n            <mat-cell  class=\"cell-row\" *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Shop}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>               \r\n          <ng-container matColumnDef=\"Bemerkung\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header style=\"width:30%\"> Bemerkung </mat-header-cell>\r\n            <mat-cell  class=\"cell-row\" *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Bemerkung}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>\r\n          <ng-container matColumnDef=\"Delete\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef  style=\"width:10px\"> </mat-header-cell>\r\n            <mat-cell *matCellDef=\"let ausgabe\" class=\"mat-delete\">\r\n              <i class=\"far fa-trash-alt fa-lg text-danger\" (click)=\"onDelete(ausgabe.Id)\"></i>\r\n            </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>\r\n          <mat-header-row *matHeaderRowDef=\"displayedColumns\"  class=\"header-row\"></mat-header-row>\r\n          <mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>\r\n          <mat-footer-row *matFooterRowDef=\"displayedColumns; sticky: true\" class=\"ausgaben-list-footer\"></mat-footer-row>\r\n        </mat-table>\r\n      </div>\r\n      <mat-paginator [pageSizeOptions]=\"[5, 10, 20]\" showFirstLastButtons></mat-paginator>\r\n    </mat-card-content>\r\n  </mat-card>\r\n</div>"
+module.exports = "<div>\r\n  <mat-card *ngIf=\"!resourcesLoaded\" style=\"display: flex; justify-content: center; align-items: center\">\r\n    <mat-progress-spinner \r\n      color=\"primary\" \r\n      mode=\"indeterminate\">\r\n    </mat-progress-spinner>\r\n  </mat-card>\r\n  <mat-card style=\"min-width:800px\">  \r\n    <mat-card-title>Ausgabenübersicht</mat-card-title>\r\n    <mat-card-content> \r\n      <div class=\"row\"  *ngIf=\"resourcesLoaded\" >\r\n        <!-- <div class=\"col-md-3\">\r\n          <div class=\"form-group\">\r\n            <mat-form-field>\r\n              <mat-label>Jahr</mat-label>\r\n              <mat-select [(ngModel)]=\"selectedYear\" [(value)]=\"selectedYear\" (selectionChange)=\"refreshResults()\" matTooltip=\"Jahr auswählen\">\r\n                <mat-option *ngFor=\"let year of yearList\" [value]=\"year\">\r\n                  {{year}}\r\n                </mat-option>\r\n              </mat-select>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-md-3\">\r\n          <div class=\"form-group\">\r\n            <mat-form-field>\r\n              <mat-label>Monat</mat-label>\r\n              <mat-select [(ngModel)]=\"selectedMonth\" [(value)]=\"selectedMonth\" (selectionChange)=\"refreshResults()\" matTooltip=\"Monat auswählen\">\r\n                <mat-option *ngFor=\"let month of monthList\" [value]=\"month.Value\">\r\n                  {{month.Text}}\r\n                </mat-option>\r\n              </mat-select>\r\n            </mat-form-field>\r\n          </div>\r\n        </div> -->\r\n        <div class=\"col-md-4\">\r\n          <app-month-picker  [selYear]=\"selYear\" [selMonth]=\"selMonth\" (selYearChanged)=\"getYearUpdate($event)\" (selMonthChanged)=\"getMonthUpdate($event)\" ></app-month-picker>\r\n        </div>\r\n        <div class=\"col-md-8\">\r\n          <div class=\"form-group\">                  \r\n            <mat-form-field>\r\n              <input (keyup)=\"applyFilter($event.target.value)\" matInput placeholder=\"Filter\">\r\n            </mat-form-field>\r\n          </div> \r\n        </div>\r\n      </div>\r\n      <div class=\"mat-elevation-z8\">\r\n        <mat-table *ngIf=\"resourcesLoaded\" [dataSource]=\"dataSource\"  matSort >\r\n          <ng-container matColumnDef=\"AusgabenTyp\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header> Ausgabentyp </mat-header-cell>\r\n            <mat-cell class=\"cell-row\" *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.AusgabenTyp}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef> Gesamtausgaben </td>\r\n          </ng-container>\r\n          <ng-container matColumnDef=\"Betrag\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header> Betrag </mat-header-cell>\r\n            <mat-cell class=\"cell-row\"  *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Betrag | currency:'EUR'}} </mat-cell>\r\n            <mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency: 'EUR'}} </mat-footer-cell>\r\n          </ng-container>\r\n          <ng-container matColumnDef=\"Datum\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header>Datum</mat-header-cell>\r\n            <mat-cell class=\"cell-row\" *matCellDef=\"let ausgabe\"  (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Datum  | date:'dd.MM.yyyy'}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>\r\n          <ng-container matColumnDef=\"User\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header>Einkäufer </mat-header-cell>\r\n            <mat-cell  class=\"cell-row\" *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.User}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>     \r\n          <ng-container matColumnDef=\"Shop\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header>Geschäft </mat-header-cell>\r\n            <mat-cell  class=\"cell-row\" *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Shop}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>               \r\n          <ng-container matColumnDef=\"Bemerkung\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef mat-sort-header style=\"width:30%\"> Bemerkung </mat-header-cell>\r\n            <mat-cell  class=\"cell-row\" *matCellDef=\"let ausgabe\" (click)='loadAusgabeToEdit(ausgabe)'> {{ausgabe.Bemerkung}} </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>\r\n          <ng-container matColumnDef=\"Delete\">\r\n            <mat-header-cell class=\"header-row\" *matHeaderCellDef  style=\"width:10px\"> </mat-header-cell>\r\n            <mat-cell *matCellDef=\"let ausgabe\" class=\"mat-delete\">\r\n              <i class=\"far fa-trash-alt fa-lg text-danger\" (click)=\"onDelete(ausgabe.Id)\"></i>\r\n            </mat-cell>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n          </ng-container>\r\n          <mat-header-row *matHeaderRowDef=\"displayedColumns\"  class=\"header-row\"></mat-header-row>\r\n          <mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>\r\n          <mat-footer-row *matFooterRowDef=\"displayedColumns; sticky: true\" class=\"ausgaben-list-footer\"></mat-footer-row>\r\n        </mat-table>\r\n      </div>\r\n      <mat-paginator [pageSizeOptions]=\"[5, 10, 20]\" showFirstLastButtons></mat-paginator>\r\n    </mat-card-content>\r\n  </mat-card>\r\n</div>"
 
 /***/ }),
 
@@ -1328,6 +1328,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var rxjs_add_observable_of__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/add/observable/of */ "./node_modules/rxjs-compat/_esm5/add/observable/of.js");
+/* harmony import */ var src_app_shared_ausgaben_model__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/ausgaben.model */ "./src/app/shared/ausgaben.model.ts");
+
 
 
 
@@ -1401,11 +1403,24 @@ var AusgabenListComponent = /** @class */ (function () {
     // Aufruf, wenn Zeile in Aufgabenliste ausgewählt
     AusgabenListComponent.prototype.loadAusgabeToEdit = function (ausgabe) {
         var _this = this;
-        console.log('ausgewählt:' + ausgabe.Id);
-        this.service.getAusgabeById(ausgabe.Id).subscribe(function (ausgabe) {
-            _this.message = null;
-            _this.ausgabeEdit.emit(ausgabe);
-        });
+        if (ausgabe) {
+            console.log('ausgewählt:' + ausgabe.Id);
+            this.service.getAusgabeById(ausgabe.Id).subscribe(function (ausgabe) {
+                _this.message = null;
+            });
+        }
+        else {
+            console.log('Initialize after deletion');
+            var ausgabeInit = new src_app_shared_ausgaben_model__WEBPACK_IMPORTED_MODULE_7__["Ausgaben"]();
+            ausgabeInit.Id = 0;
+            ausgabeInit.AusgabenTypId = 1;
+            ausgabeInit.Betrag = 0;
+            ausgabeInit.ShopId = 1;
+            ausgabeInit.UserId = 1;
+            ausgabeInit.Bemerkung = '';
+            ausgabe = ausgabeInit;
+        }
+        this.ausgabeEdit.emit(ausgabe);
     };
     AusgabenListComponent.prototype.onDelete = function (Id) {
         var _this = this;
@@ -1417,13 +1432,13 @@ var AusgabenListComponent = /** @class */ (function () {
                 _this.baseComponent.allAusgaben.subscribe(function (data) {
                     _this.dataSource.data = data;
                     _this.resourcesLoaded = true;
+                    _this.loadAusgabeToEdit();
                 });
             }, 
             //this.toastr.warning('Deleted successfully', 'Payment Detail Register');},
             function (err) {
                 console.log(err);
             });
-            this.ausgabenInputComponent.resetForm();
         }
     };
     AusgabenListComponent.prototype.getYearUpdate = function (selected) {
@@ -1612,13 +1627,13 @@ var AusgabenService = /** @class */ (function () {
         return this.http.get(this.url + '/ausgaben')
             .map(function (res) {
             res.forEach(function (r) {
-                _this.getAusgabenTypById(r.AusgabenTypId.toString()).subscribe(function (ausgabeTyp) {
+                _this.getAusgabenTypById(r.AusgabenTypId).subscribe(function (ausgabeTyp) {
                     r.AusgabenTyp = ausgabeTyp.Name;
                 });
                 _this.getUserById(r.UserId.toString()).subscribe(function (user) {
                     r.User = user.Name;
                 });
-                _this.getShopById(r.ShopId.toString()).subscribe(function (shop) {
+                _this.getShopById(r.ShopId).subscribe(function (shop) {
                     r.Shop = shop.Name;
                 });
             });
@@ -1635,7 +1650,7 @@ var AusgabenService = /** @class */ (function () {
         });
     };
     AusgabenService.prototype.getAusgabeById = function (ausgabenId) {
-        return this.http.get(this.url + '/ausgaben/' + ausgabenId);
+        return this.http.get(this.url + '/ausgaben/' + ausgabenId.toString());
     };
     AusgabenService.prototype.addNewAusgabe = function (ausgaben) {
         return this.http.post(this.url + '/ausgaben', ausgaben, this.httpOptions);
