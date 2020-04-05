@@ -38,7 +38,7 @@
           <div class="col-md-6">
             <div class="form-group">
                 <mat-form-field class="cell-row">  
-                    <input  class="cell-row" formControlName="Datum"  (dateChange)="onDateChanged()" matTooltip="Datum" matInput  [matDatepicker]="picker" placeholder="Datum">  
+                    <input  class="cell-row" formControlName="Datum"  (dateChange)="onDateChanged('change', $event)" matTooltip="Datum" matInput  [matDatepicker]="picker" placeholder="Datum">  
                     <mat-datepicker-toggle  class="cell-row" matSuffix [for]="picker"></mat-datepicker-toggle>  
                       <mat-datepicker #picker class="cell-row" [startAt]="currentDate"></mat-datepicker> 
                 </mat-form-field>  

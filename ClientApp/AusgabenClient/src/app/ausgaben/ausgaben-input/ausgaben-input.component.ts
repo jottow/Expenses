@@ -7,6 +7,7 @@ import { AusgabenListComponent } from '../ausgaben-list/ausgaben-list.component'
 import { AusgabenTypSet } from 'src/app/shared/interfaces/ausgabentyp-set';
 import { UserSet } from 'src/app/shared/interfaces/user-set';
 import { ShopSet } from 'src/app/shared/interfaces/shop-set';
+import { MatDatepickerInputEvent } from '@angular/material';
 
 
 @Component({
@@ -90,7 +91,7 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
       ausgaben.Datum = ausgabenDatum;
     }
 
-    if(ausgaben.Id=='0'){
+    if(ausgaben.Id==0){
       this.addAusgabenEntry(ausgaben); 
      }
     else{
@@ -101,7 +102,8 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
   }  
 
 
-  onDateChanged(): void {
+  onDateChanged(type: string, event: MatDatepickerInputEvent<Date>): void {
+    console.log(event);
       this.dateChanged=true;
   }
 
@@ -127,9 +129,8 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
   } 
   
   addAusgabenEntry(ausgaben: Ausgaben){
-    if(!this.dateChanged){
-     ausgaben.Datum.setDate(ausgaben.Datum.getDate()-1); // Antwort: Referenz auf currentDate()?
-    }
+    console.log('dateChanged: ' + this.dateChanged + 'Date: ' + ausgaben.Datum);
+    ausgaben.Datum.setDate(ausgaben.Datum.getDate()-1); // Antwort: Referenz auf currentDate()?
    
     this.service.addNewAusgabe(ausgaben).subscribe(  
         () => {  

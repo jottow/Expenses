@@ -116,12 +116,14 @@ export class AusgabenListComponent implements OnInit{
       let ausgabeInit=new Ausgaben();
       ausgabeInit.Id=0;
       ausgabeInit.AusgabenTypId=1;
+      ausgabeInit.Datum=new Date();
       ausgabeInit.Betrag=0;
       ausgabeInit.ShopId=1;
       ausgabeInit.UserId=1;
       ausgabeInit.Bemerkung='';
       ausgabe=ausgabeInit;
     }
+    
     this.ausgabeEdit.emit(ausgabe);  
   }
 
