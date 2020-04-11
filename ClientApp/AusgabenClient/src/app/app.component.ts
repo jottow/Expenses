@@ -7,15 +7,8 @@ import { AusgabenTypSet } from './shared/interfaces/ausgabentyp-set';
 import { UserSet } from './shared/interfaces/user-set';
 import { ShopSet } from './shared/interfaces/shop-set';
 import { ChartColorsShops } from './shared/enums/chart-colors.shop.enum';
+import { ChartColorsAusgabenTypen } from './shared/enums/chart-colors-ausgabenTypen.enum';
 
-enum ChartColorsAusgabenTypen {
-  "grey",
-  "green",
-  "yellow",
-  "blue",
-  "red",
-  "orange"
-}
 
 
 @Component({

@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col-md-4">
        <!-- ausgewählte Ausgabe (ausgabeEdit) wird von ausgabenListComponent empfangen.
-         ausgabeEdit enthält die Daten des markierten Datensatzes, die von ausgabenListComponent emittiert wurden. 
+         ausgabeEdit enthält die Daten des markierten Datensatzes als Input, die von ausgabenListComponent emittiert wurden. 
          veröffentlichte ausgabenListComponent wird für ausgabenInputComponent verfügbar gemacht.
          Hierdurch kann in ausgaben-imput.component die Methode refreshResults() von ausgabenListComponent aufgerufen werden.-->
       <app-ausgaben-input [ausgabenListComponent]="ausgabenListComponent" [ausgabeEdit]="ausgabeEdit">lädt...</app-ausgaben-input>

@@ -21,6 +21,7 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
   @Input() ausgabeEdit: Ausgaben; 
   @Input() ausgabenListComponent: AusgabenListComponent;
   dateChanged: boolean;
+  resourcesLoaded=false;
 
   constructor(private formbuider: FormBuilder,
     private service: AusgabenService, 
@@ -53,20 +54,25 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
     this.users=this.appComponent.allUsers;
     this.shops=this.appComponent.allShops;
     this.ausgabenInputForm=this.formbuider.group({
-      Id: ['0'],
+      Id: [0],
       AusgabenTypId:[this.defaultAusgabenTyp, [Validators.required]],
       UserId:[this.defaultUser, [Validators.required]],
       ShopId:[this.defaultShop, [Validators.required]],
       Datum:[this.currentDate, [Validators.required]],
-      Betrag:['', [Validators.required]],
+      Betrag:[null, [Validators.required, Validators.min(0.01), Validators.max(10000)]],
       Bemerkung:['']
     })
+
+    this.resourcesLoaded=true;
   }
 
   // occurs, when table entry in ausgabeList has been clicked
   ngOnChanges() {
+    this.resourcesLoaded=false;
     console.log('input:ngOnChanges');
+    
     if(this.ausgabeEdit){
+        let betrag = this.ausgabeEdit.Betrag ? this.ausgabeEdit.Betrag.toFixed(2):null;
         // Übernahme der ausgewählten Ausgabe in die Eingabefelder
         this.ausgabenInputForm=this.formbuider.group({
         Id: [this.ausgabeEdit.Id],
@@ -74,16 +80,18 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
         UserId:[this.ausgabeEdit.UserId, [Validators.required]],
         ShopId:[this.ausgabeEdit.ShopId, [Validators.required]],
         Datum:[this.ausgabeEdit.Datum, [Validators.required]],
-        Betrag:[this.ausgabeEdit.Betrag.toFixed(2), [Validators.required]],
+        Betrag:[betrag,[Validators.required, Validators.min(0.01), Validators.max(10000)]],
         Bemerkung:[this.ausgabeEdit.Bemerkung]
       })
     }
+    this.resourcesLoaded=true;
   }
 
   onFormSubmit() {  
     const ausgaben = this.ausgabenInputForm.value;  
     console.log('submit');
     console.log(ausgaben);
+    this.resourcesLoaded=false;
     if(this.dateChanged){
       
       let ausgabenDatum = ausgaben.Datum;
@@ -99,6 +107,7 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
     }
    
     this.resetForm(this.ausgabenInputForm); 
+    this.resourcesLoaded=true;
   }  
 
 
@@ -119,7 +128,7 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
       this.currentDate=new Date(); //TODO: warum hat sich der Wert auf Date()-1 geändert?
       console.log('currentDate (ResetForm):');
       console.log(this.currentDate);
-      form.reset({Id:'0', AusgabenTypId:this.defaultAusgabenTyp, Datum:this.currentDate, UserId: this.defaultUser, ShopId: this.defaultShop});
+      form.reset({Id:0, AusgabenTypId:this.defaultAusgabenTyp, Datum:this.currentDate, UserId: this.defaultUser, ShopId: this.defaultShop, Betrag:''});
     }
     else{
       this.ausgabenInputForm.reset({AusgabenTypId:this.defaultAusgabenTyp});
@@ -130,7 +139,7 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
   
   addAusgabenEntry(ausgaben: Ausgaben){
     console.log('dateChanged: ' + this.dateChanged + 'Date: ' + ausgaben.Datum);
-    ausgaben.Datum.setDate(ausgaben.Datum.getDate()-1); // Antwort: Referenz auf currentDate()?
+    ausgaben.Datum.setDate(ausgaben.Datum.getDate()-1); //TODO: warum abzieheh?
    
     this.service.addNewAusgabe(ausgaben).subscribe(  
         () => {  

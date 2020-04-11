@@ -1,16 +1,9 @@
 import { __decorate, __metadata } from "tslib";
 import { Component } from '@angular/core';
-import { ChartColorsUser } from './shared/chart-colors-user.enum';
+import { ChartColorsUser } from './shared/enums/chart-colors-user.enum';
 import { AusgabenService } from './shared/ausgaben.service';
-var ChartColorsAusgabenTypen;
-(function (ChartColorsAusgabenTypen) {
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["grey"] = 0] = "grey";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["green"] = 1] = "green";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["yellow"] = 2] = "yellow";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["blue"] = 3] = "blue";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["red"] = 4] = "red";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["orange"] = 5] = "orange";
-})(ChartColorsAusgabenTypen || (ChartColorsAusgabenTypen = {}));
+import { ChartColorsShops } from './shared/enums/chart-colors.shop.enum';
+import { ChartColorsAusgabenTypen } from './shared/enums/chart-colors-ausgabenTypen.enum';
 var AppComponent = /** @class */ (function () {
     function AppComponent(service) {
         this.service = service;
@@ -26,13 +19,36 @@ var AppComponent = /** @class */ (function () {
         this.selectedMonth = new Date().getMonth() + 1; // getMonth() is 0-based
         this.allUsers = [];
         this.allAusgabenTypen = [];
+        this.allShops = [];
+        // Dropdowns in input form
         this.getUsers();
-        this.getAusgaben();
         this.getAusgabenTypen();
+        this.getShops();
+        // expenses list, evaluations (Auswertungen)
+        this.getAusgaben();
     };
     AppComponent.prototype.ngOnChanges = function () {
         console.log('app.component OnChanges');
         this.getAusgaben();
+    };
+    AppComponent.prototype.getAusgaben = function () {
+        this.allAusgaben = this.service.getAllAusgaben(this.selectedYear, this.selectedMonth);
+    };
+    AppComponent.prototype.getAusgabenTypen = function () {
+        var _this = this;
+        this.service.getAllAusgabenTypen().subscribe(function (data) {
+            var colorIndex = 0;
+            data.forEach(function (at) {
+                _this.allAusgabenTypen.push({ AusgabenTypId: at.AusgabenTypId, Name: at.Name, Color: ChartColorsAusgabenTypen[colorIndex] });
+                colorIndex++;
+            });
+            _this.ausgabenTypenNames = _this.allAusgabenTypen.map(function (at) { return at.Name; });
+            _this.ausgabenTypColors = _this.allAusgabenTypen.map(function (at) { return at.Color; });
+            console.log('AusgabenTypColors:');
+            console.log(_this.ausgabenTypColors);
+            console.log('AusgabentypNames:');
+            console.log(_this.ausgabenTypenNames);
+        });
     };
     AppComponent.prototype.getUsers = function () {
         var _this = this;
@@ -52,23 +68,22 @@ var AppComponent = /** @class */ (function () {
             console.log(_this.userNames);
         });
     };
-    AppComponent.prototype.getAusgaben = function () {
-        this.allAusgaben = this.service.getAllAusgaben(this.selectedYear, this.selectedMonth);
-    };
-    AppComponent.prototype.getAusgabenTypen = function () {
+    AppComponent.prototype.getShops = function () {
         var _this = this;
-        this.service.getAllAusgabenTypen().subscribe(function (data) {
+        this.service.getAllShops().subscribe(function (data) {
             var colorIndex = 0;
-            data.forEach(function (at) {
-                _this.allAusgabenTypen.push({ AusgabenTypId: at.Id, Name: at.Name, Color: ChartColorsAusgabenTypen[colorIndex] });
+            data.forEach(function (s) {
+                _this.allShops.push({ ShopId: s.ShopId, Name: s.Name, Color: ChartColorsShops[colorIndex] });
                 colorIndex++;
             });
-            _this.ausgabenTypenNames = _this.allAusgabenTypen.map(function (at) { return at.Name; });
-            _this.ausgabenTypColors = _this.allAusgabenTypen.map(function (at) { return at.Color; });
-            console.log('AusgabenTypColors:');
-            console.log(_this.ausgabenTypColors);
-            console.log('AusgabentypNames:');
-            console.log(_this.ausgabenTypenNames);
+            _this.shopNames = _this.allShops.map(function (s) { return s.Name; });
+            console.log('Shops:');
+            console.log(_this.allShops);
+            _this.shopColors = _this.allShops.map(function (u) { return u.Color; });
+            console.log('ShopColors:');
+            console.log(_this.shopColors);
+            console.log('ShopNames:');
+            console.log(_this.shopNames);
         });
     };
     // fügt "0"-en vor übergebene Zahl, bis "size" erreicht ist:

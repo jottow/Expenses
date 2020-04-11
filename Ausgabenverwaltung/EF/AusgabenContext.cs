@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Ausgabenverwaltung.Models;
+﻿using Ausgabenverwaltung.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace Ausgabenverwaltung.Models
+namespace Ausgabenverwaltung.EF
 {
     public class AusgabenContext:DbContext
     {
@@ -28,6 +28,9 @@ namespace Ausgabenverwaltung.Models
 
 
             modelBuilder.SeedHaushalt();
+            modelBuilder.SeedAusgabenTypes();
+            modelBuilder.SeedShops();
+            modelBuilder.SeedUsers();
         }
     }
 }

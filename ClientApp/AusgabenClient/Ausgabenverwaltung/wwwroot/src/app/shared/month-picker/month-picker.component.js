@@ -41,10 +41,10 @@ var DatepickerViewsSelection = /** @class */ (function () {
         this.events.push('${type}: ${event.value}');
     };
     DatepickerViewsSelection.prototype.initializeDatePicker = function () {
-        // console.log('selYear:');
-        // console.log(this.selYear);
-        // console.log('selMonth:');
-        // console.log(this.selMonth);
+        console.log('selYear:');
+        console.log(this.selYear);
+        console.log('selMonth:');
+        console.log(this.selMonth);
         this.selectedDate.setValue(new Date(this.selYear, this.selMonth - 1, 1));
     };
     DatepickerViewsSelection.prototype.chosenYearHandler = function (normalizedYear) {

@@ -21,13 +21,13 @@ var AusgabenService = /** @class */ (function () {
         return this.http.get(this.url + '/ausgaben')
             .map(function (res) {
             res.forEach(function (r) {
-                _this.getAusgabenTypById(r.AusgabenTypId.toString()).subscribe(function (ausgabeTyp) {
+                _this.getAusgabenTypById(r.AusgabenTypId).subscribe(function (ausgabeTyp) {
                     r.AusgabenTyp = ausgabeTyp.Name;
                 });
                 _this.getUserById(r.UserId.toString()).subscribe(function (user) {
                     r.User = user.Name;
                 });
-                _this.getShopById(r.ShopId.toString()).subscribe(function (shop) {
+                _this.getShopById(r.ShopId).subscribe(function (shop) {
                     r.Shop = shop.Name;
                 });
             });
@@ -44,7 +44,7 @@ var AusgabenService = /** @class */ (function () {
         });
     };
     AusgabenService.prototype.getAusgabeById = function (ausgabenId) {
-        return this.http.get(this.url + '/ausgaben/' + ausgabenId);
+        return this.http.get(this.url + '/ausgaben/' + ausgabenId.toString());
     };
     AusgabenService.prototype.addNewAusgabe = function (ausgaben) {
         return this.http.post(this.url + '/ausgaben', ausgaben, this.httpOptions);

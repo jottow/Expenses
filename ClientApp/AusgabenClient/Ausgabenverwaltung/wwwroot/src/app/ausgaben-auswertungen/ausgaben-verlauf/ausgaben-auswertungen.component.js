@@ -3,7 +3,7 @@ import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core
 import { AusgabenService } from 'src/app/shared/ausgaben.service';
 import { Chart } from 'chart.js';
 import { AppComponent } from 'src/app/app.component';
-import { ChartColorsUser } from 'src/app/shared/chart-colors-user.enum';
+import { ChartColorsUser } from 'src/app/shared/enums/chart-colors-user.enum';
 import { AusgabenListComponent } from 'src/app/ausgaben/ausgaben-list/ausgaben-list.component';
 var AusgabenAuswertungenComponent = /** @class */ (function () {
     function AusgabenAuswertungenComponent(service, baseComponent) {

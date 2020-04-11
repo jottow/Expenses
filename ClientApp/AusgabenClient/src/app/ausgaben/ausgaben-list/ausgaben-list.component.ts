@@ -26,6 +26,8 @@ export class AusgabenListComponent implements OnInit{
   @Output() ausgabeEdit = new EventEmitter<Ausgaben>();
   @Output() selYearChanged = new EventEmitter<number>();
   @Output() selMonthChanged = new EventEmitter<number>();
+  
+   // receives aelected date to the list
   @Input() selYear: number;
   @Input() selMonth: number;
  
@@ -34,7 +36,7 @@ export class AusgabenListComponent implements OnInit{
   ausgabeTypName: string;
   resourcesLoaded=false;
 
-  constructor(private http: HttpClient, 
+  constructor(
     private service: AusgabenService,
     private baseComponent: AppComponent
   
@@ -60,12 +62,28 @@ export class AusgabenListComponent implements OnInit{
     this.resourcesLoaded=true;
   }
 
-  // ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-  //   throw new Error("Method not implemented.");
-  // }
+  onDelete(Id){
+    if(confirm('Eintrag löschen?')){
+      this.resourcesLoaded=false;
+      this.service.deleteAusgabe(Id)
+       .subscribe(res =>{
+        console.log('list: ngOnDelete');
+        this.baseComponent.allAusgaben.subscribe(
+          data => {
+            this.dataSource.data=data;
+            this.resourcesLoaded=true;
+            this.loadAusgabeToEdit();
+          }
+        );},
+        //this.toastr.warning('Deleted successfully', 'Payment Detail Register');},
+         err =>{
+           console.log(err);
+         }
+      );
+    }
+  }
 
-
-  refreshResults(selectedYear?:number, selectedMonth?:number) {
+   refreshResults(selectedYear?:number, selectedMonth?:number) {
     console.log('list: refreshResults');
    
     if(!selectedYear){
@@ -117,7 +135,7 @@ export class AusgabenListComponent implements OnInit{
       ausgabeInit.Id=0;
       ausgabeInit.AusgabenTypId=1;
       ausgabeInit.Datum=new Date();
-      ausgabeInit.Betrag=0;
+      // ausgabeInit.Betrag=0;
       ausgabeInit.ShopId=1;
       ausgabeInit.UserId=1;
       ausgabeInit.Bemerkung='';
@@ -127,26 +145,6 @@ export class AusgabenListComponent implements OnInit{
     this.ausgabeEdit.emit(ausgabe);  
   }
 
-  onDelete(Id){
-    if(confirm('Eintrag löschen?')){
-      this.resourcesLoaded=false;
-      this.service.deleteAusgabe(Id)
-       .subscribe(res =>{
-        console.log('list: ngOnDelete');
-        this.baseComponent.allAusgaben.subscribe(
-          data => {
-            this.dataSource.data=data;
-            this.resourcesLoaded=true;
-            this.loadAusgabeToEdit();
-          }
-        );},
-        //this.toastr.warning('Deleted successfully', 'Payment Detail Register');},
-         err =>{
-           console.log(err);
-         }
-      );
-    }
-  }
 
   getYearUpdate(selected: number){
     console.log('gewähltes Jahr:' + selected);

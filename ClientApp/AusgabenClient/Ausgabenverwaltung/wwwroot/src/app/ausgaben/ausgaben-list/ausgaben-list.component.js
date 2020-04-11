@@ -1,13 +1,12 @@
 import { __decorate, __metadata } from "tslib";
 import { Component, EventEmitter, Output, ViewChild, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { AusgabenService } from 'src/app/shared/ausgaben.service';
 import { AppComponent } from 'src/app/app.component';
 import { MatTableDataSource, MatSort, MatPaginator, MatTable } from '@angular/material';
 import 'rxjs/add/observable/of';
+import { Ausgaben } from 'src/app/shared/ausgaben.model';
 var AusgabenListComponent = /** @class */ (function () {
-    function AusgabenListComponent(http, service, baseComponent) {
-        this.http = http;
+    function AusgabenListComponent(service, baseComponent) {
         this.service = service;
         this.baseComponent = baseComponent;
         this.dataSource = new MatTableDataSource();
@@ -34,9 +33,25 @@ var AusgabenListComponent = /** @class */ (function () {
         });
         this.resourcesLoaded = true;
     };
-    // ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    //   throw new Error("Method not implemented.");
-    // }
+    AusgabenListComponent.prototype.onDelete = function (Id) {
+        var _this = this;
+        if (confirm('Eintrag löschen?')) {
+            this.resourcesLoaded = false;
+            this.service.deleteAusgabe(Id)
+                .subscribe(function (res) {
+                console.log('list: ngOnDelete');
+                _this.baseComponent.allAusgaben.subscribe(function (data) {
+                    _this.dataSource.data = data;
+                    _this.resourcesLoaded = true;
+                    _this.loadAusgabeToEdit();
+                });
+            }, 
+            //this.toastr.warning('Deleted successfully', 'Payment Detail Register');},
+            function (err) {
+                console.log(err);
+            });
+        }
+    };
     AusgabenListComponent.prototype.refreshResults = function (selectedYear, selectedMonth) {
         var _this = this;
         console.log('list: refreshResults');
@@ -51,7 +66,6 @@ var AusgabenListComponent = /** @class */ (function () {
             this.baseComponent.selectedYear = selectedYear;
             this.baseComponent.selectedMonth = selectedMonth;
         }
-        console.log('Serviseaufruf');
         console.log(selectedYear);
         console.log(selectedMonth);
         this.service.getAllAusgaben(selectedYear, selectedMonth).subscribe(function (data) {
@@ -72,29 +86,25 @@ var AusgabenListComponent = /** @class */ (function () {
     // Aufruf, wenn Zeile in Aufgabenliste ausgewählt
     AusgabenListComponent.prototype.loadAusgabeToEdit = function (ausgabe) {
         var _this = this;
-        console.log('ausgewählt:' + ausgabe.Id);
-        this.service.getAusgabeById(ausgabe.Id).subscribe(function (ausgabe) {
-            _this.message = null;
-            _this.ausgabeEdit.emit(ausgabe);
-        });
-    };
-    AusgabenListComponent.prototype.onDelete = function (Id) {
-        var _this = this;
-        if (confirm('Eintrag löschen?')) {
-            this.resourcesLoaded = false;
-            this.service.deleteAusgabe(Id)
-                .subscribe(function (res) {
-                console.log('list: ngOnDelete');
-                _this.baseComponent.allAusgaben.subscribe(function (data) {
-                    _this.dataSource.data = data;
-                    _this.resourcesLoaded = true;
-                });
-            }, 
-            //this.toastr.warning('Deleted successfully', 'Payment Detail Register');},
-            function (err) {
-                console.log(err);
+        if (ausgabe) {
+            console.log('ausgewählt:' + ausgabe.Id);
+            this.service.getAusgabeById(ausgabe.Id).subscribe(function (ausgabe) {
+                _this.message = null;
             });
         }
+        else {
+            console.log('Initialize after deletion');
+            var ausgabeInit = new Ausgaben();
+            ausgabeInit.Id = 0;
+            ausgabeInit.AusgabenTypId = 1;
+            ausgabeInit.Datum = new Date();
+            ausgabeInit.Betrag = 0;
+            ausgabeInit.ShopId = 1;
+            ausgabeInit.UserId = 1;
+            ausgabeInit.Bemerkung = '';
+            ausgabe = ausgabeInit;
+        }
+        this.ausgabeEdit.emit(ausgabe);
     };
     AusgabenListComponent.prototype.getYearUpdate = function (selected) {
         console.log('gewähltes Jahr:' + selected);
@@ -144,8 +154,7 @@ var AusgabenListComponent = /** @class */ (function () {
             templateUrl: './ausgaben-list.component.html',
             styles: []
         }),
-        __metadata("design:paramtypes", [HttpClient,
-            AusgabenService,
+        __metadata("design:paramtypes", [AusgabenService,
             AppComponent])
     ], AusgabenListComponent);
     return AusgabenListComponent;

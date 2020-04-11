@@ -1,11 +1,10 @@
 import { __decorate, __metadata } from "tslib";
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { AusgabenService } from '../shared/ausgaben.service';
 var AusgabenComponent = /** @class */ (function () {
-    function AusgabenComponent(service) {
-        this.service = service;
+    function AusgabenComponent() {
         this.selYearChanged = new EventEmitter();
         this.selMonthChanged = new EventEmitter();
+        this.resourcesLoaded = false;
     }
     AusgabenComponent.prototype.getSelectedAusgabe = function (selected) {
         this.ausgabeEdit = selected;
@@ -17,16 +16,6 @@ var AusgabenComponent = /** @class */ (function () {
     AusgabenComponent.prototype.getMonthUpdate = function (selected) {
         console.log('gewählter Monat:' + selected);
         this.selMonthChanged.emit(selected);
-    };
-    // Dropdowns
-    AusgabenComponent.prototype.loadAllAusgabenTypen = function () {
-        return this.service.getAllAusgabenTypen();
-    };
-    AusgabenComponent.prototype.loadAllUsers = function () {
-        return this.service.getAllUsers();
-    };
-    AusgabenComponent.prototype.loadAllShops = function () {
-        return this.service.getAllShops();
     };
     __decorate([
         Output(),
@@ -49,8 +38,7 @@ var AusgabenComponent = /** @class */ (function () {
             selector: 'app-ausgaben',
             templateUrl: './ausgaben.component.html',
             styles: []
-        }),
-        __metadata("design:paramtypes", [AusgabenService])
+        })
     ], AusgabenComponent);
     return AusgabenComponent;
 }());

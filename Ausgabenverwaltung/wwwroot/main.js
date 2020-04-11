@@ -336,20 +336,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_enums_chart_colors_user_enum__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shared/enums/chart-colors-user.enum */ "./src/app/shared/enums/chart-colors-user.enum.ts");
 /* harmony import */ var _shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/ausgaben.service */ "./src/app/shared/ausgaben.service.ts");
 /* harmony import */ var _shared_enums_chart_colors_shop_enum__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shared/enums/chart-colors.shop.enum */ "./src/app/shared/enums/chart-colors.shop.enum.ts");
+/* harmony import */ var _shared_enums_chart_colors_ausgabenTypen_enum__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shared/enums/chart-colors-ausgabenTypen.enum */ "./src/app/shared/enums/chart-colors-ausgabenTypen.enum.ts");
 
 
 
 
 
-var ChartColorsAusgabenTypen;
-(function (ChartColorsAusgabenTypen) {
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["grey"] = 0] = "grey";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["green"] = 1] = "green";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["yellow"] = 2] = "yellow";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["blue"] = 3] = "blue";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["red"] = 4] = "red";
-    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["orange"] = 5] = "orange";
-})(ChartColorsAusgabenTypen || (ChartColorsAusgabenTypen = {}));
+
 var AppComponent = /** @class */ (function () {
     function AppComponent(service) {
         this.service = service;
@@ -385,7 +378,7 @@ var AppComponent = /** @class */ (function () {
         this.service.getAllAusgabenTypen().subscribe(function (data) {
             var colorIndex = 0;
             data.forEach(function (at) {
-                _this.allAusgabenTypen.push({ AusgabenTypId: at.AusgabenTypId, Name: at.Name, Color: ChartColorsAusgabenTypen[colorIndex] });
+                _this.allAusgabenTypen.push({ AusgabenTypId: at.AusgabenTypId, Name: at.Name, Color: _shared_enums_chart_colors_ausgabenTypen_enum__WEBPACK_IMPORTED_MODULE_5__["ChartColorsAusgabenTypen"][colorIndex] });
                 colorIndex++;
             });
             _this.ausgabenTypenNames = _this.allAusgabenTypen.map(function (at) { return at.Name; });
@@ -1145,7 +1138,7 @@ var AusgabenAuswertungenComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form name='#ausgabenInputForm' class=\"ausgaben-input-container\" [formGroup]=\"ausgabenInputForm\" (ngSubmit)=\"onFormSubmit(ausgabenInputForm.value)\">\r\n  <mat-card>  \r\n      <mat-card-title>Ausgabe erfassen/ bearbeiten</mat-card-title>\r\n      <mat-card-content>  \r\n         <div class=\"row\">\r\n          <div class=\"col-md-5\">\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Ausgabentyp</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultAusgabenTyp\" matTooltip=\"Ausgabentyp auswählen\" formControlName=\"AusgabenTypId\">\r\n                  <mat-option *ngFor=\"let ausgabentyp of ausgabenTypen\" [value]=\"ausgabentyp.AusgabenTypId\">\r\n                    {{ausgabentyp.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field >\r\n                <input  class=\"cell-row\"  formControlName=\"Betrag\" type=\"number\" step=\"0.01\" matTooltip=\"Betrag in EUR\" matInput placeholder=\"Betrag\">  \r\n              </mat-form-field>  \r\n              <mat-error>  \r\n                <span *ngIf=\"!ausgabenInputForm.get('Betrag').value && ausgabenInputForm.get('Betrag').touched\"></span>  \r\n              </mat-error>  \r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Einkäufer</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultUser\" matTooltip=\"Einkäufer auswählen\" formControlName=\"UserId\">\r\n                  <mat-option *ngFor=\"let user of users\" [value]=\"user.UserId\">\r\n                    {{user.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n           </div>\r\n          </div>\r\n        \r\n          <div class=\"col-md-1\"></div>\r\n          <div class=\"col-md-6\">\r\n            <div class=\"form-group\">\r\n                <mat-form-field class=\"cell-row\">  \r\n                    <input  class=\"cell-row\" formControlName=\"Datum\"  (dateChange)=\"onDateChanged('change', $event)\" matTooltip=\"Datum\" matInput  [matDatepicker]=\"picker\" placeholder=\"Datum\">  \r\n                    <mat-datepicker-toggle  class=\"cell-row\" matSuffix [for]=\"picker\"></mat-datepicker-toggle>  \r\n                      <mat-datepicker #picker class=\"cell-row\" [startAt]=\"currentDate\"></mat-datepicker> \r\n                </mat-form-field>  \r\n                <mat-error>  \r\n                  <span *ngIf=\"!ausgabenInputForm.get('Datum').value && ausgabenInputForm.get('Datum').touched\"></span>  \r\n                </mat-error>  \r\n            </div>   \r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Geschäft</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultShop\" matTooltip=\"Geschäft auswählen\" formControlName=\"ShopId\">\r\n                  <mat-option *ngFor=\"let shop of shops\" [value]=\"shop.ShopId\"> \r\n                    <!-- //   | async -->\r\n                    {{shop.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div> \r\n            <div class=\"form-group\">\r\n              <mat-form-field >  \r\n                  <input  class=\"cell-row\" formControlName=\"Bemerkung\"  matTooltip=\"Bemerkung\" matInput placeholder=\"Bemerkung\">  \r\n              </mat-form-field>  \r\n            </div>                                 \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-6\">\r\n            <button type=\"submit\" mat-raised-button color=\"accent\"matTooltip=\"Speichern\"[disabled]=\"!ausgabenInputForm.valid\"> Speichern</button>      \r\n          </div>\r\n          <div class=\"col-md-6\">          \r\n            <button type=\"button\" mat-raised-button color=\"accent\" matTooltip=\"Eingaben zurücksetzen\" (click)=\"resetForm(ausgabenInputForm)\"> Zurücksetzen</button>  \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-12\">\r\n            <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:12px;\" Class=\"success\" align=\"left\">  \r\n                {{message}}  \r\n            </p>  \r\n          </div>\r\n        </div>\r\n    </mat-card-content>\r\n  </mat-card>\r\n</form>"
+module.exports = "<mat-card *ngIf=\"!resourcesLoaded\" style=\"display: flex; justify-content: center; align-items: center\">\r\n  <mat-progress-spinner \r\n    color=\"primary\" \r\n    mode=\"indeterminate\">\r\n  </mat-progress-spinner>\r\n</mat-card>\r\n<form name='#ausgabenInputForm'  class=\"ausgaben-input-container\" [formGroup]=\"ausgabenInputForm\" (ngSubmit)=\"onFormSubmit(ausgabenInputForm.value)\">\r\n  <mat-card>  \r\n    <mat-card-title>Ausgabe erfassen/ bearbeiten</mat-card-title>\r\n    <mat-card-content>  \r\n        <div class=\"row\">\r\n          <div class=\"col-md-5\">\r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Ausgabentyp</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultAusgabenTyp\" matTooltip=\"Ausgabentyp auswählen\" formControlName=\"AusgabenTypId\">\r\n                  <mat-option *ngFor=\"let ausgabentyp of ausgabenTypen\" [value]=\"ausgabentyp.AusgabenTypId\">\r\n                    {{ausgabentyp.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <mat-form-field >\r\n                <input  class=\"cell-row\"  formControlName=\"Betrag\" type=\"number\" step=\"0.01\" matTooltip=\"Betrag in EUR\" matInput placeholder=\"Betrag\">  \r\n              </mat-form-field>  \r\n              <mat-error>  \r\n                <span *ngIf=\"!ausgabenInputForm.get('Betrag').value && ausgabenInputForm.get('Betrag').touched\"></span>  \r\n              </mat-error>  \r\n            </div>\r\n            <div class=\"form-group\">\r\n                <mat-form-field>\r\n                  <mat-label>Einkäufer</mat-label>\r\n                  <mat-select class=\"cell-row\" [(ngModel)]=\"defaultUser\" matTooltip=\"Einkäufer auswählen\" formControlName=\"UserId\">\r\n                    <mat-option *ngFor=\"let user of users\" [value]=\"user.UserId\">\r\n                      {{user.Name}}\r\n                    </mat-option>\r\n                  </mat-select>\r\n                </mat-form-field>\r\n            </div>\r\n          </div>\r\n        \r\n          <div class=\"col-md-1\"></div>\r\n          <div class=\"col-md-6\">\r\n            <div class=\"form-group\">\r\n                <mat-form-field class=\"cell-row\">  \r\n                    <input  class=\"cell-row\" formControlName=\"Datum\"  (dateChange)=\"onDateChanged('change', $event)\" matTooltip=\"Datum\" matInput  [matDatepicker]=\"picker\" placeholder=\"Datum\">  \r\n                    <mat-datepicker-toggle  class=\"cell-row\" matSuffix [for]=\"picker\"></mat-datepicker-toggle>  \r\n                      <mat-datepicker #picker class=\"cell-row\" [startAt]=\"currentDate\"></mat-datepicker> \r\n                </mat-form-field>  \r\n                <mat-error>  \r\n                  <span *ngIf=\"!ausgabenInputForm.get('Datum').value && ausgabenInputForm.get('Datum').touched\"></span>  \r\n                </mat-error>  \r\n            </div>   \r\n            <div class=\"form-group\">\r\n              <mat-form-field>\r\n                <mat-label>Geschäft</mat-label>\r\n                <mat-select class=\"cell-row\" [(ngModel)]=\"defaultShop\" matTooltip=\"Geschäft auswählen\" formControlName=\"ShopId\">\r\n                  <mat-option *ngFor=\"let shop of shops\" [value]=\"shop.ShopId\"> \r\n                    <!-- //   | async -->\r\n                    {{shop.Name}}\r\n                  </mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n            </div> \r\n            <div class=\"form-group\">\r\n              <mat-form-field >  \r\n                  <input  class=\"cell-row\" formControlName=\"Bemerkung\"  matTooltip=\"Bemerkung\" matInput placeholder=\"Bemerkung\">  \r\n              </mat-form-field>  \r\n            </div>                                 \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-6\">\r\n            <button type=\"submit\" mat-raised-button color=\"accent\"matTooltip=\"Speichern\"[disabled]=\"!ausgabenInputForm.valid\"> Speichern</button>      \r\n          </div>\r\n          <div class=\"col-md-6\">          \r\n            <button type=\"button\" mat-raised-button color=\"accent\" matTooltip=\"Eingaben zurücksetzen\" (click)=\"resetForm(ausgabenInputForm)\"> Zurücksetzen</button>  \r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-12\">\r\n            <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:12px;\" Class=\"success\" align=\"left\">  \r\n                {{message}}  \r\n            </p>  \r\n          </div>\r\n        </div>\r\n    </mat-card-content>\r\n  </mat-card>\r\n</form>"
 
 /***/ }),
 
@@ -1178,6 +1171,7 @@ var AusgabenInputComponent = /** @class */ (function () {
         this.formbuider = formbuider;
         this.service = service;
         this.appComponent = appComponent;
+        this.resourcesLoaded = false;
         // Standard values for base data in dropdowns
         this.defaultAusgabenTyp = 1;
         this.defaultUser = 1;
@@ -1193,19 +1187,22 @@ var AusgabenInputComponent = /** @class */ (function () {
         this.users = this.appComponent.allUsers;
         this.shops = this.appComponent.allShops;
         this.ausgabenInputForm = this.formbuider.group({
-            Id: ['0'],
+            Id: [0],
             AusgabenTypId: [this.defaultAusgabenTyp, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
             UserId: [this.defaultUser, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
             ShopId: [this.defaultShop, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
             Datum: [this.currentDate, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
-            Betrag: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
+            Betrag: [null, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].min(0.01), _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].max(10000)]],
             Bemerkung: ['']
         });
+        this.resourcesLoaded = true;
     };
     // occurs, when table entry in ausgabeList has been clicked
     AusgabenInputComponent.prototype.ngOnChanges = function () {
+        this.resourcesLoaded = false;
         console.log('input:ngOnChanges');
         if (this.ausgabeEdit) {
+            var betrag = this.ausgabeEdit.Betrag ? this.ausgabeEdit.Betrag.toFixed(2) : null;
             // Übernahme der ausgewählten Ausgabe in die Eingabefelder
             this.ausgabenInputForm = this.formbuider.group({
                 Id: [this.ausgabeEdit.Id],
@@ -1213,15 +1210,17 @@ var AusgabenInputComponent = /** @class */ (function () {
                 UserId: [this.ausgabeEdit.UserId, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
                 ShopId: [this.ausgabeEdit.ShopId, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
                 Datum: [this.ausgabeEdit.Datum, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
-                Betrag: [this.ausgabeEdit.Betrag.toFixed(2), [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
+                Betrag: [betrag, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].min(0.01), _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].max(10000)]],
                 Bemerkung: [this.ausgabeEdit.Bemerkung]
             });
         }
+        this.resourcesLoaded = true;
     };
     AusgabenInputComponent.prototype.onFormSubmit = function () {
         var ausgaben = this.ausgabenInputForm.value;
         console.log('submit');
         console.log(ausgaben);
+        this.resourcesLoaded = false;
         if (this.dateChanged) {
             var ausgabenDatum = ausgaben.Datum;
             ausgabenDatum.setDate(ausgabenDatum.getDate() + 1);
@@ -1234,6 +1233,7 @@ var AusgabenInputComponent = /** @class */ (function () {
             this.updateAusgabenEntry(ausgaben);
         }
         this.resetForm(this.ausgabenInputForm);
+        this.resourcesLoaded = true;
     };
     AusgabenInputComponent.prototype.onDateChanged = function (type, event) {
         console.log(event);
@@ -1250,7 +1250,7 @@ var AusgabenInputComponent = /** @class */ (function () {
             this.currentDate = new Date(); //TODO: warum hat sich der Wert auf Date()-1 geändert?
             console.log('currentDate (ResetForm):');
             console.log(this.currentDate);
-            form.reset({ Id: '0', AusgabenTypId: this.defaultAusgabenTyp, Datum: this.currentDate, UserId: this.defaultUser, ShopId: this.defaultShop });
+            form.reset({ Id: 0, AusgabenTypId: this.defaultAusgabenTyp, Datum: this.currentDate, UserId: this.defaultUser, ShopId: this.defaultShop, Betrag: '' });
         }
         else {
             this.ausgabenInputForm.reset({ AusgabenTypId: this.defaultAusgabenTyp });
@@ -1260,7 +1260,7 @@ var AusgabenInputComponent = /** @class */ (function () {
     AusgabenInputComponent.prototype.addAusgabenEntry = function (ausgaben) {
         var _this = this;
         console.log('dateChanged: ' + this.dateChanged + 'Date: ' + ausgaben.Datum);
-        ausgaben.Datum.setDate(ausgaben.Datum.getDate() - 1); // Antwort: Referenz auf currentDate()?
+        ausgaben.Datum.setDate(ausgaben.Datum.getDate() - 1); //TODO: warum abzieheh?
         this.service.addNewAusgabe(ausgaben).subscribe(function () {
             _this.message = 'Ausgabe erfolgreich erfasst.';
             _this.ausgabenListComponent.refreshResults();
@@ -1323,13 +1323,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AusgabenListComponent", function() { return AusgabenListComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var src_app_shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/ausgaben.service */ "./src/app/shared/ausgaben.service.ts");
-/* harmony import */ var src_app_app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var rxjs_add_observable_of__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/add/observable/of */ "./node_modules/rxjs-compat/_esm5/add/observable/of.js");
-/* harmony import */ var src_app_shared_ausgaben_model__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/ausgaben.model */ "./src/app/shared/ausgaben.model.ts");
-
+/* harmony import */ var src_app_shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/ausgaben.service */ "./src/app/shared/ausgaben.service.ts");
+/* harmony import */ var src_app_app_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var rxjs_add_observable_of__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/add/observable/of */ "./node_modules/rxjs-compat/_esm5/add/observable/of.js");
+/* harmony import */ var src_app_shared_ausgaben_model__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/ausgaben.model */ "./src/app/shared/ausgaben.model.ts");
 
 
 
@@ -1338,11 +1336,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var AusgabenListComponent = /** @class */ (function () {
-    function AusgabenListComponent(http, service, baseComponent) {
-        this.http = http;
+    function AusgabenListComponent(service, baseComponent) {
         this.service = service;
         this.baseComponent = baseComponent;
-        this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatTableDataSource"]();
+        this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatTableDataSource"]();
         this.displayedColumns = ['AusgabenTyp', 'Betrag', 'Datum', 'User', 'Shop', 'Bemerkung', 'Delete'];
         // sends the marked list entry to the parent
         this.ausgabeEdit = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
@@ -1366,9 +1363,25 @@ var AusgabenListComponent = /** @class */ (function () {
         });
         this.resourcesLoaded = true;
     };
-    // ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    //   throw new Error("Method not implemented.");
-    // }
+    AusgabenListComponent.prototype.onDelete = function (Id) {
+        var _this = this;
+        if (confirm('Eintrag löschen?')) {
+            this.resourcesLoaded = false;
+            this.service.deleteAusgabe(Id)
+                .subscribe(function (res) {
+                console.log('list: ngOnDelete');
+                _this.baseComponent.allAusgaben.subscribe(function (data) {
+                    _this.dataSource.data = data;
+                    _this.resourcesLoaded = true;
+                    _this.loadAusgabeToEdit();
+                });
+            }, 
+            //this.toastr.warning('Deleted successfully', 'Payment Detail Register');},
+            function (err) {
+                console.log(err);
+            });
+        }
+    };
     AusgabenListComponent.prototype.refreshResults = function (selectedYear, selectedMonth) {
         var _this = this;
         console.log('list: refreshResults');
@@ -1411,36 +1424,17 @@ var AusgabenListComponent = /** @class */ (function () {
         }
         else {
             console.log('Initialize after deletion');
-            var ausgabeInit = new src_app_shared_ausgaben_model__WEBPACK_IMPORTED_MODULE_7__["Ausgaben"]();
+            var ausgabeInit = new src_app_shared_ausgaben_model__WEBPACK_IMPORTED_MODULE_6__["Ausgaben"]();
             ausgabeInit.Id = 0;
             ausgabeInit.AusgabenTypId = 1;
             ausgabeInit.Datum = new Date();
-            ausgabeInit.Betrag = 0;
+            // ausgabeInit.Betrag=0;
             ausgabeInit.ShopId = 1;
             ausgabeInit.UserId = 1;
             ausgabeInit.Bemerkung = '';
             ausgabe = ausgabeInit;
         }
         this.ausgabeEdit.emit(ausgabe);
-    };
-    AusgabenListComponent.prototype.onDelete = function (Id) {
-        var _this = this;
-        if (confirm('Eintrag löschen?')) {
-            this.resourcesLoaded = false;
-            this.service.deleteAusgabe(Id)
-                .subscribe(function (res) {
-                console.log('list: ngOnDelete');
-                _this.baseComponent.allAusgaben.subscribe(function (data) {
-                    _this.dataSource.data = data;
-                    _this.resourcesLoaded = true;
-                    _this.loadAusgabeToEdit();
-                });
-            }, 
-            //this.toastr.warning('Deleted successfully', 'Payment Detail Register');},
-            function (err) {
-                console.log(err);
-            });
-        }
     };
     AusgabenListComponent.prototype.getYearUpdate = function (selected) {
         console.log('gewähltes Jahr:' + selected);
@@ -1453,16 +1447,16 @@ var AusgabenListComponent = /** @class */ (function () {
         this.refreshResults(this.selYear, selected);
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_5__["MatTable"]),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatTable"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_4__["MatTable"]),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatTable"])
     ], AusgabenListComponent.prototype, "table", void 0);
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_5__["MatPaginator"]),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatPaginator"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_4__["MatPaginator"]),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatPaginator"])
     ], AusgabenListComponent.prototype, "paginator", void 0);
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_5__["MatSort"]),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatSort"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSort"]),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSort"])
     ], AusgabenListComponent.prototype, "sort", void 0);
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
@@ -1489,9 +1483,8 @@ var AusgabenListComponent = /** @class */ (function () {
             selector: 'app-ausgabenlist',
             template: __webpack_require__(/*! ./ausgaben-list.component.html */ "./src/app/ausgaben/ausgaben-list/ausgaben-list.component.html")
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-            src_app_shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_3__["AusgabenService"],
-            src_app_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_ausgaben_service__WEBPACK_IMPORTED_MODULE_2__["AusgabenService"],
+            src_app_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]])
     ], AusgabenListComponent);
     return AusgabenListComponent;
 }());
@@ -1507,7 +1500,7 @@ var AusgabenListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ausgaben-main-container\">\r\n  <!-- <h5 class=\"display 4.text-center\"> -->\r\n    <span style=\"font-weight:bold\">Erfassung und Übersicht</span> \r\n  <!-- </h5> -->\r\n  <hr>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-4\">\r\n       <!-- ausgewählte Ausgabe (ausgabeEdit) wird von ausgabenListComponent empfangen.\r\n         ausgabeEdit enthält die Daten des markierten Datensatzes, die von ausgabenListComponent emittiert wurden. \r\n         veröffentlichte ausgabenListComponent wird für ausgabenInputComponent verfügbar gemacht.\r\n         Hierdurch kann in ausgaben-imput.component die Methode refreshResults() von ausgabenListComponent aufgerufen werden.-->\r\n      <app-ausgaben-input [ausgabenListComponent]=\"ausgabenListComponent\" [ausgabeEdit]=\"ausgabeEdit\">lädt...</app-ausgaben-input>\r\n   </div>\r\n    <div class=\"col-md-8\">\r\n      <!-- ausgewählte Ausgabe (ausgabeEdit) wird mit #ausgabenListComponent veröffentlicht\r\n        -->\r\n      <app-ausgabenlist #ausgabenListComponent (ausgabeEdit)=\"getSelectedAusgabe($event)\" (selYear)=\"getYearUpdate($event)\" (selMonth)=\"getMonthUpdate($event)\" >lädt...</app-ausgabenlist> \r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"ausgaben-main-container\">\r\n  <!-- <h5 class=\"display 4.text-center\"> -->\r\n    <span style=\"font-weight:bold\">Erfassung und Übersicht</span> \r\n  <!-- </h5> -->\r\n  <hr>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-4\">\r\n       <!-- ausgewählte Ausgabe (ausgabeEdit) wird von ausgabenListComponent empfangen.\r\n         ausgabeEdit enthält die Daten des markierten Datensatzes als Input, die von ausgabenListComponent emittiert wurden. \r\n         veröffentlichte ausgabenListComponent wird für ausgabenInputComponent verfügbar gemacht.\r\n         Hierdurch kann in ausgaben-imput.component die Methode refreshResults() von ausgabenListComponent aufgerufen werden.-->\r\n      <app-ausgaben-input [ausgabenListComponent]=\"ausgabenListComponent\" [ausgabeEdit]=\"ausgabeEdit\">lädt...</app-ausgaben-input>\r\n   </div>\r\n    <div class=\"col-md-8\">\r\n      <!-- ausgewählte Ausgabe (ausgabeEdit) wird mit #ausgabenListComponent veröffentlicht\r\n        -->\r\n      <app-ausgabenlist #ausgabenListComponent (ausgabeEdit)=\"getSelectedAusgabe($event)\" (selYear)=\"getYearUpdate($event)\" (selMonth)=\"getMonthUpdate($event)\" >lädt...</app-ausgabenlist> \r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1529,6 +1522,7 @@ var AusgabenComponent = /** @class */ (function () {
     function AusgabenComponent() {
         this.selYearChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         this.selMonthChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.resourcesLoaded = false;
     }
     AusgabenComponent.prototype.getSelectedAusgabe = function (selected) {
         this.ausgabeEdit = selected;
@@ -1729,6 +1723,29 @@ var AusgabenService = /** @class */ (function () {
     return AusgabenService;
 }());
 
+
+
+/***/ }),
+
+/***/ "./src/app/shared/enums/chart-colors-ausgabenTypen.enum.ts":
+/*!*****************************************************************!*\
+  !*** ./src/app/shared/enums/chart-colors-ausgabenTypen.enum.ts ***!
+  \*****************************************************************/
+/*! exports provided: ChartColorsAusgabenTypen */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChartColorsAusgabenTypen", function() { return ChartColorsAusgabenTypen; });
+var ChartColorsAusgabenTypen;
+(function (ChartColorsAusgabenTypen) {
+    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["grey"] = 0] = "grey";
+    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["green"] = 1] = "green";
+    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["yellow"] = 2] = "yellow";
+    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["blue"] = 3] = "blue";
+    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["red"] = 4] = "red";
+    ChartColorsAusgabenTypen[ChartColorsAusgabenTypen["orange"] = 5] = "orange";
+})(ChartColorsAusgabenTypen || (ChartColorsAusgabenTypen = {}));
 
 
 /***/ }),

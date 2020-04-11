@@ -15,6 +15,7 @@ export class AusgabenComponent {
   @Input() selYear: number;
   @Input() selMonth: number;
   ausgabeEdit: Ausgaben;
+  resourcesLoaded=false;
   
   
   getSelectedAusgabe(selected: Ausgaben){
