@@ -72,7 +72,7 @@ export class AusgabenInputComponent implements OnInit, OnChanges {
     console.log('input:ngOnChanges');
     
     if(this.ausgabeEdit){
-        let betrag = this.ausgabeEdit.Betrag ? this.ausgabeEdit.Betrag.toFixed(2):null;
+        let betrag = this.ausgabeEdit.Betrag? this.ausgabeEdit.Betrag.toFixed(2):null;
         // Übernahme der ausgewählten Ausgabe in die Eingabefelder
         this.ausgabenInputForm=this.formbuider.group({
         Id: [this.ausgabeEdit.Id],

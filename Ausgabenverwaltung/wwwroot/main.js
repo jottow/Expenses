@@ -1192,7 +1192,7 @@ var AusgabenInputComponent = /** @class */ (function () {
             UserId: [this.defaultUser, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
             ShopId: [this.defaultShop, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
             Datum: [this.currentDate, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
-            Betrag: [null, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].min(0.01), _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].max(10000)]],
+            Betrag: [0, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].min(0.01), _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].max(10000)]],
             Bemerkung: ['']
         });
         this.resourcesLoaded = true;
