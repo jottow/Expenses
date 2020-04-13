@@ -58,7 +58,6 @@ namespace Ausgabenverwaltung.EF
                 new User { UserId = 2, Name = "Ich",  HaushaltId=1},
             };
 
-
             modelBuilder.Entity<User>().HasData(userListe);
         }
     }
