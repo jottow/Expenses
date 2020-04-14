@@ -4,7 +4,7 @@ GO
 INSERT INTO [dbo].Haushalt
            ([Name])
      VALUES
-           ('Testadresse')
+           ('Testhaushalt')
 GO
 
 
